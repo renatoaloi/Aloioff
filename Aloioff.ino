@@ -14,7 +14,7 @@
 #endif
 
 #define RELE 0
-#define BUTTON 2
+#define BUTTON 3
 
 const char *ssid = APSSID;
 const char *password = APPSK;

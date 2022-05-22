@@ -4,7 +4,8 @@ const int limiteVezes = 7;
 const int intervaloTempo = 300;
 
 void configButton() {
-  pinMode(BUTTON, INPUT_PULLUP);
+  pinMode(BUTTON, INPUT);
+  digitalWrite(BUTTON, HIGH);
   contaTempo = millis();
 }
 

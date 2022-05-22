@@ -4,7 +4,7 @@ void initWiFi()
     // modo ap
     Serial.print("Setting soft-AP configuration ... ");
     Serial.println(WiFi.softAPConfig(local_IP, gateway, subnet) ? "Ready" : "Failed!");
-    Serial.print("Configuring access point...");
+    Serial.println("Configuring access point...");
     WiFi.softAP(ssid, password);
     IPAddress myIP = WiFi.softAPIP();
     Serial.print("AP IP address: ");
