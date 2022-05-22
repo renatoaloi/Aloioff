@@ -1,4 +1,4 @@
-# ALOIOFF
+# Aloioff
 
 ## Introdução
 
@@ -46,7 +46,7 @@ Pronto! Seu Aloioff está configurado e funcionando!
 
 ## Esquema elétrico
 
-- Em desenvolvimento
+![Esquema elétrico do Aloioff](esquema_eletrico_aloioff.png "Esquema elétrico do Aloioff")
 
 ## Projeto da Caixa
 
