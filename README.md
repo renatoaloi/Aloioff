@@ -50,4 +50,7 @@ Pronto! Seu Aloioff está configurado e funcionando!
 
 ## Projeto da Caixa
 
-- Em desenvolvimento
+- Na pasta `case` você encontrará os arquivos fonte `*.scad`, tanto da caixa quanto da tampa.
+- Para editar os arquivos `*.scad` utilize o editor open source chamado `openSCAD`.
+- Se quiser imprimir diretamente, utilize os arquivos `*.stl` que já estão prontos para imprimir.
+- Utilize a configuração `Draft - 0.2mm` para imprimir.
