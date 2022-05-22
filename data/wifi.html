@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ALOITECH - Wi-Fi do Dispositivo Alexa Relê</title>
+    <link rel="stylesheet" href="css/site.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <script src="js/site.js"></script>
+</head>
+
+<body>
+    <div class="dashboard">
+        <div class="dashboard-nav" id="dashboardNav">
+            <header>
+                <a href="#!" class="menu-toggle" id="menu" onclick="manejaMenu()">Menu</a>
+                <a href="index.html" class="brand-logo">
+                    <span>ALOITECH</span>
+                </a>
+            </header>
+            <nav class="dashboard-nav-list">
+                <a href="index.html" class="dashboard-nav-item">
+                    Home
+                </a>
+                <a href="config.html" class="dashboard-nav-item">
+                    Dispositivo
+                </a>
+                <a href="#" class="dashboard-nav-item active">
+                    Wi-Fi
+                </a>
+
+                <a href="reset.html" class="dashboard-nav-item">
+                    Reiniciar
+                </a>
+            </nav>
+        </div>
+        <div class="dashboard-app">
+            <header class="dashboard-toolbar">
+                <a href="#!" class="menu-toggle" id="menu" onclick="manejaMenu()">Menu</a>
+            </header>
+            <div class="dashboard-content">
+                <div class="container">
+                    <form id="formNome" method="GET" action="/wifi/config">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Wi-Fi do Dispositivo Alexa Relê</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="ssid">Qual o SSID do seu Wi-Fi?</label>
+                                    <input type="text" class="form-control" id="ssid" name="ssid"
+                                        aria-describedby="nomeHelp" placeholder="Digite o nome">
+                                    <small id="nomeHelp" class="form-text text-muted">Nome da sua rede wifi</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Qual a senha do seu Wi-Fi?</label>
+                                    <input type="text" class="form-control" id="password" name="password"
+                                        aria-describedby="senhaHelp" placeholder="Digite a senha">
+                                    <small id="senhaHelp" class="form-text text-muted">Senha da sua rede wifi</small>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button id="salvar" class="btn btn-primary">Salvar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('ssid').disabled = true;
+        document.getElementById('password').disabled = true;
+        document.getElementById('salvar').disabled = true;
+        setTimeout(() => {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                console.log(this.responseText);
+                if (this.readyState == 4 && this.status == 200) {
+                    const responseSplit = this.responseText.split('|');
+                    var ssid = "";
+                    var password = "";
+                    if (responseSplit.length == 2) {
+                        document.getElementById('ssid').value = responseSplit[0];
+                        document.getElementById('password').value = responseSplit[1];
+                        document.getElementById('ssid').disabled = false;
+                        document.getElementById('password').disabled = false;
+                        document.getElementById('salvar').disabled = false;
+                    }
+                }
+            }
+            xhttp.open("GET", "/wifi/state", true);
+            xhttp.send();
+        }, 1000);
+    </script>
+</body>
+
+</html>
