@@ -109,17 +109,25 @@ module furacao2() {
     furoPorca();
 }
 
-difference() {
-    union() {
-        pecaProntaNoLugar();
-        parede();
-        parede2();
+module pecaProntaNoLugarComFuros() {
+    translate([4,0,0])
+    difference() {
+        union() {
+            pecaProntaNoLugar();
+            parede();
+            parede2();
+        }
+        furacao1();
+        translate([0,72,0])
+        furacao1();
+        furacao2();
+        translate([0,72,0])
+        furacao2();
     }
-    furacao1();
-    translate([0,72,0])
-    furacao1();
-    furacao2();
-    translate([0,72,0])
-    furacao2();
 }
 
+difference(){
+    pecaProntaNoLugarComFuros();
+    translate([11,38,22-4])
+    cube([6,7,5]);
+}
