@@ -46,7 +46,19 @@ Pronto! Seu Aloioff está configurado e funcionando!
 
 ## Esquema elétrico
 
+O esquema elétrico do Aloioff é bem simples e é ligado em série com a carga, mas é possível também fazer o acionamento em paralelo com um interruptor.
+
 ![Esquema elétrico do Aloioff](esquema_eletrico_aloioff.png "Esquema elétrico do Aloioff")
+
+## Hack necessário para funcionar
+
+Infelizmente os módulos de relê chineses tem um problema crônico em que o ESP01 não inicia sozinho, por causa de um projeto malfeito pelos chineses.
+
+Para contornarmos esse problema, precisamos de um `hack`, ou seja um ajuste técnico, que são dois resistores de 10K conectados no pino `3V3` e nos pinos `EN` e `GPIO0`.
+
+E não esqueça de ligar o botão também conforme mostra o esquema abaixo:
+
+![Esquema botão do Aloioff](esquema_botao_aloioff.png "Esquema botão do Aloioff")
 
 ## Projeto da Caixa
 
