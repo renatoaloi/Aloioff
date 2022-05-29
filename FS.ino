@@ -3,7 +3,7 @@ bool initFS() {
 }
 
 bool handleFileRead(String path) {
-  Serial.println(String("handleFileRead: ") + path);
+  if (DEBUG) Serial.println(String("handleFileRead: ") + path);
 
   if (path.endsWith("/")) {
     path += "index.html";
@@ -22,7 +22,7 @@ bool handleFileRead(String path) {
   if (LittleFS.exists(path)) {
     File file = LittleFS.open(path, "r");
     if (server.streamFile(file, contentType) != file.size()) {
-      Serial.println("Sent less data than expected!");
+      if (DEBUG) Serial.println("Sent less data than expected!");
     }
     file.close();
     return true;

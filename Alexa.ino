@@ -1,6 +1,6 @@
 void initAlexa() {
   pinMode(RELE, OUTPUT);
-  digitalWrite(RELE, HIGH);
+  digitalWrite(RELE, LOW);
   fauxmo.createServer(true);
   fauxmo.setPort(80);
   fauxmo.enable(true);

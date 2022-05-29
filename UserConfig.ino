@@ -66,16 +66,18 @@ char* GetDispositivo() {
 
 void GetUserConfig() {
   EEPROM.get(eeAddress, userConfig);
-  Serial.print("id: ");
-  Serial.println(userConfig.id);
-  Serial.print("ssid: ");
-  Serial.println(userConfig.ssid);
-  Serial.print("password: ");
-  Serial.println(userConfig.password);
-  Serial.print("dispositivo: ");
-  Serial.println(userConfig.dispositivo);
-  Serial.print("Modo AP ");
-  Serial.println(userConfig.modoAP ? "ligado!" : "desligado!");
+  if (DEBUG) {
+    Serial.print("id: ");
+    Serial.println(userConfig.id);
+    Serial.print("ssid: ");
+    Serial.println(userConfig.ssid);
+    Serial.print("password: ");
+    Serial.println(userConfig.password);
+    Serial.print("dispositivo: ");
+    Serial.println(userConfig.dispositivo);
+    Serial.print("Modo AP ");
+    Serial.println(userConfig.modoAP ? "ligado!" : "desligado!");
+  }
 }
 
 bool isUserConfigModeAP() {

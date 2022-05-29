@@ -2,14 +2,20 @@ void initWiFi()
 {
   if (isUserConfigModeAP()) {
     // modo ap
-    Serial.print("Setting soft-AP configuration ... ");
-    Serial.println(WiFi.softAPConfig(local_IP, gateway, subnet) ? "Ready" : "Failed!");
-    Serial.println("Configuring access point...");
+    if (DEBUG) Serial.print("Setting soft-AP configuration ... ");
+    bool isSuccess = WiFi.softAPConfig(local_IP, gateway, subnet);
+    if (DEBUG) {
+      Serial.println(isSuccess ? "Ready" : "Failed!");
+      Serial.println("Configuring access point...");
+    }
     WiFi.softAP(ssid, password);
     IPAddress myIP = WiFi.softAPIP();
-    Serial.print("AP IP address: ");
-    Serial.println(myIP);
+    if (DEBUG) {
+      Serial.print("AP IP address: ");
+      Serial.println(myIP);
+    }
 
+    server.on("/test", handleTest);
     server.on("/dispositivo", handleDevice);
     server.on("/dispositivo/state", handleDispositivoState);
     server.on("/wifi/config", handleWifiConfig);
@@ -21,27 +27,32 @@ void initWiFi()
     // terminou de configura modo ap
     ////////////////////////////////
     // WI-FI INIT
-    Serial.printf("Connecting to %s\n", GetWifiSsid());
+    if (DEBUG) Serial.printf("Connecting to %s\n", GetWifiSsid());
     WiFi.mode(WIFI_STA);
     WiFi.begin(GetWifiSsid(), GetWifiPassword());
     // Wait for connection
     while (WiFi.status() != WL_CONNECTED) {
       delay(500);
-      Serial.print(".");
+      if (DEBUG) Serial.print(".");
       if (checkButton()) {
         SaveUserConfig("", "", "");
         SaveModoAP();
         ResetDevice();
       }
     }
-    Serial.println("");
-    Serial.print(F("Connected! IP address: "));
-    Serial.println(WiFi.localIP());
+    if (DEBUG)  {
+      Serial.println("");
+      Serial.print(F("Connected! IP address: "));
+      Serial.println(WiFi.localIP());
+    }
   }
 }
 
+void handleTest() {
+  server.send(200, "text/plain", "Teste de rede");
+}
+
 void handleReset() {
-  Serial.println("PASSEI NO RESET!");
   TurnOffModoAP();
   ResetDevice();
 }
@@ -68,10 +79,12 @@ void handleDevice() {
 }
 
 void handleWifiConfig() {
-  Serial.print("SSID: ");
-  Serial.println(server.arg(0).c_str());
-  Serial.print("PASS: ");
-  Serial.println(server.arg(1).c_str());
+  if (DEBUG) {
+    Serial.print("SSID: ");
+    Serial.println(server.arg(0).c_str());
+    Serial.print("PASS: ");
+    Serial.println(server.arg(1).c_str());
+  }
   SaveWifiConfig(server.arg(0).c_str(), server.arg(1).c_str());
   //server.send(200, "text/html", "<h1>Wifi ssid: " + server.arg(0) + ", Wifi pass: " + server.arg(1) + "</h1>");
   server.sendHeader("Location", String("/wifi.html"), true);
@@ -106,6 +119,6 @@ void handleFileSystem() {
   message += "path=";
   message += server.arg("path");
   message += '\n';
-  Serial.print(message);
+  if (DEBUG) Serial.print(message);
   return replyNotFound(message);
 }

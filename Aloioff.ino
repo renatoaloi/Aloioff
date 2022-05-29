@@ -16,6 +16,8 @@
 #define RELE 0
 #define BUTTON 3
 
+#define DEBUG 0
+
 const char *ssid = APSSID;
 const char *password = APPSK;
 const char *host = "aloitech";
@@ -31,8 +33,12 @@ fauxmoESP fauxmo;
 static const char TEXT_PLAIN[] PROGMEM = "text/plain";
 
 void setup() {
-  Serial.begin(115200);
-  initFS();
+  if (DEBUG) Serial.begin(115200);
+  delay(500);
+  if (!initFS()) {
+    if (DEBUG) Serial.println("Erro ao iniciar FS");
+    while(1);
+  }
   configUser();
   configButton();
   initWiFi();
@@ -41,6 +47,7 @@ void setup() {
   }
   else {
     server.begin();
+    if (DEBUG) Serial.println("Servidor iniciado!");
   }
 }
 
@@ -48,13 +55,6 @@ void loop() {
   if (checkButton()) {
     SaveUserConfig("", "", "");
     SaveModoAP();
-//    pinMode(RELE, OUTPUT);
-//    for (int i = 0; i < 10; i++) {
-//      digitalWrite(RELE, 1);
-//      delay(500);
-//      digitalWrite(RELE, 0);
-//      delay(500);
-//    }
     ResetDevice();
   }
   if (!isUserConfigModeAP() && CheckUserConfig()) {
