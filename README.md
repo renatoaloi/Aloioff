@@ -48,7 +48,7 @@ Pronto! Seu Aloioff está configurado e funcionando!
 
 O esquema elétrico do Aloioff é bem simples e é ligado em série com a carga, mas é possível também fazer o acionamento em paralelo com um interruptor.
 
-![Esquema elétrico do Aloioff](esquema_eletrico_aloioff.png "Esquema elétrico do Aloioff")
+![Esquema elétrico do Aloioff](imgs/esquema_eletrico_aloioff.png "Esquema elétrico do Aloioff")
 
 ## Hack necessário para funcionar
 
@@ -58,7 +58,7 @@ Para contornarmos esse problema, precisamos de um `hack`, ou seja um ajuste téc
 
 E não esqueça de ligar o botão também conforme mostra o esquema abaixo:
 
-![Esquema botão do Aloioff](esquema_botao_aloioff.png "Esquema botão do Aloioff")
+![Esquema botão do Aloioff](imgs/esquema_botao_aloioff.png "Esquema botão do Aloioff")
 
 ## Projeto da Caixa
 
