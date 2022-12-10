@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ALOITECH - Reiniciar Dispositivo Alexa Relê</title>
+    <title>ALOITECH - Ação Manual</title>
     <link rel="stylesheet" href="css/site.css" />
     <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <script src="js/site.js"></script>
+    <script src="js/site.js?v=2"></script>
 </head>
 
 <body>
@@ -23,7 +23,7 @@
                 <a href="index.html" class="dashboard-nav-item">
                     Home
                 </a>
-                <a href="config.html" class="dashboard-nav-item">
+                <a href="#" class="dashboard-nav-item active">
                     Dispositivo
                 </a>
                 <a href="wifi.html" class="dashboard-nav-item">
@@ -32,7 +32,7 @@
                 <a href="manual.html" class="dashboard-nav-item">
                     Ação Manual
                 </a>
-                <a href="#" class="dashboard-nav-item active">
+                <a href="reset.html" class="dashboard-nav-item">
                     Reiniciar
                 </a>
             </nav>
@@ -45,16 +45,18 @@
                 <div class="container">
                     <div class="card">
                         <div class="card-header">
-                            <h2>Reiniciar Dispositivo Alexa Relê</h2>
+                            <h2>Ação Manual</h2>
                         </div>
-                        <div class="card-body">
-                            <p>Clique no botão abaixo para confirmar a ação!</p>
-                        </div>
+                        <form id="formLiga" method="GET" action="/relay?status=1"></form>
                         <div class="card-footer">
-                            <form id="formNome" method="GET" action="/reset">
-                                <button type="submit" class="btn btn-danger">Reiniciar</button>
-                            </form>
+                            <button id="ligar" type="submit" class="btn btn-success">Ligar</button>
                         </div>
+                        </form>
+                        <form id="formDesliga" method="GET" action="/relay?status=0"></form>
+                        <div class="card-footer">
+                            <button id="desligar" type="submit" class="btn btn-success">Desligar</button>
+                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -1,16 +1,20 @@
-void initWiFi() 
+void initWiFi()
 {
-  if (isUserConfigModeAP()) {
+  if (isUserConfigModeAP())
+  {
     // modo ap
-    if (DEBUG) Serial.print("Setting soft-AP configuration ... ");
+    if (DEBUG)
+      Serial.print("Setting soft-AP configuration ... ");
     bool isSuccess = WiFi.softAPConfig(local_IP, gateway, subnet);
-    if (DEBUG) {
+    if (DEBUG)
+    {
       Serial.println(isSuccess ? "Ready" : "Failed!");
       Serial.println("Configuring access point...");
     }
     WiFi.softAP(ssid, password);
     IPAddress myIP = WiFi.softAPIP();
-    if (DEBUG) {
+    if (DEBUG)
+    {
       Serial.print("AP IP address: ");
       Serial.println(myIP);
     }
@@ -20,27 +24,34 @@ void initWiFi()
     server.on("/dispositivo/state", handleDispositivoState);
     server.on("/wifi/config", handleWifiConfig);
     server.on("/wifi/state", handleWifiState);
+    server.on("/relay", handleRelay);
     server.on("/reset", handleReset);
     server.onNotFound(handleFileSystem);
   }
-  else {
+  else
+  {
     // terminou de configura modo ap
     ////////////////////////////////
     // WI-FI INIT
-    if (DEBUG) Serial.printf("Connecting to %s\n", GetWifiSsid());
+    if (DEBUG)
+      Serial.printf("Connecting to %s\n", GetWifiSsid());
     WiFi.mode(WIFI_STA);
     WiFi.begin(GetWifiSsid(), GetWifiPassword());
     // Wait for connection
-    while (WiFi.status() != WL_CONNECTED) {
+    while (WiFi.status() != WL_CONNECTED)
+    {
       delay(500);
-      if (DEBUG) Serial.print(".");
-      if (checkButton()) {
+      if (DEBUG)
+        Serial.print(".");
+      if (checkButton())
+      {
         SaveUserConfig("", "", "");
         SaveModoAP();
         ResetDevice();
       }
     }
-    if (DEBUG)  {
+    if (DEBUG)
+    {
       Serial.println("");
       Serial.print(F("Connected! IP address: "));
       Serial.println(WiFi.localIP());
@@ -48,56 +59,86 @@ void initWiFi()
   }
 }
 
-void handleTest() {
+void handleDelay()
+{
+  char *status = server.arg(0).c_str();
+
+  if ((strcmp(status, "1") == 0))
+  {
+    if (state)
+    {
+      digitalWrite(RELE, LOW);
+    }
+    else
+    {
+      digitalWrite(RELE, HIGH);
+    }
+  }
+
+  server.sendHeader("Location", String("/manual.html"), true);
+  server.send(302, "text/plain", "");
+}
+
+void handleTest()
+{
   server.send(200, "text/plain", "Teste de rede");
 }
 
-void handleReset() {
+void handleReset()
+{
   TurnOffModoAP();
   ResetDevice();
 }
 
-void handleWifiState() {
+void handleWifiState()
+{
   char buf[41];
   const char *first = GetWifiSsid();
   const char *second = GetWifiPassword();
-  strcpy(buf,first);
+  strcpy(buf, first);
   strcat(buf, "|");
-  strcat(buf,second);
+  strcat(buf, second);
   server.send(200, "text/plain", buf);
 }
 
-void handleDispositivoState() {
+void handleDispositivoState()
+{
   server.send(200, "text/plain", GetDispositivo());
 }
 
-void handleDevice() {
+void handleDevice()
+{
   SaveDevice(server.arg(0).c_str());
-  //server.send(200, "text/html", "<h1>Dispositivo: " + server.arg(0) + "</h1>");
+  // server.send(200, "text/html", "<h1>Dispositivo: " + server.arg(0) + "</h1>");
   server.sendHeader("Location", String("/config.html"), true);
   server.send(302, "text/plain", "");
 }
 
-void handleWifiConfig() {
-  if (DEBUG) {
+void handleWifiConfig()
+{
+  if (DEBUG)
+  {
     Serial.print("SSID: ");
     Serial.println(server.arg(0).c_str());
     Serial.print("PASS: ");
     Serial.println(server.arg(1).c_str());
   }
   SaveWifiConfig(server.arg(0).c_str(), server.arg(1).c_str());
-  //server.send(200, "text/html", "<h1>Wifi ssid: " + server.arg(0) + ", Wifi pass: " + server.arg(1) + "</h1>");
+  // server.send(200, "text/html", "<h1>Wifi ssid: " + server.arg(0) + ", Wifi pass: " + server.arg(1) + "</h1>");
   server.sendHeader("Location", String("/wifi.html"), true);
   server.send(302, "text/plain", "");
 }
 
-void replyNotFound(String msg) {
+void replyNotFound(String msg)
+{
   server.send(404, FPSTR(TEXT_PLAIN), msg);
 }
 
-void handleFileSystem() {
+void handleFileSystem()
+{
   String uri = ESP8266WebServer::urlDecode(server.uri());
-  if (handleFileRead(uri)) {
+  if (handleFileRead(uri))
+  {
     return;
   }
   String message;
@@ -109,7 +150,8 @@ void handleFileSystem() {
   message += F("\nArguments: ");
   message += server.args();
   message += '\n';
-  for (uint8_t i = 0; i < server.args(); i++) {
+  for (uint8_t i = 0; i < server.args(); i++)
+  {
     message += F(" NAME:");
     message += server.argName(i);
     message += F("\n VALUE:");
@@ -119,6 +161,7 @@ void handleFileSystem() {
   message += "path=";
   message += server.arg("path");
   message += '\n';
-  if (DEBUG) Serial.print(message);
+  if (DEBUG)
+    Serial.print(message);
   return replyNotFound(message);
 }
