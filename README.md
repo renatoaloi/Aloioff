@@ -24,6 +24,7 @@ Pronto! O ambiente necessário foi instalado!
   - https://www.filipeflop.com/produto/adaptador-usb-para-modulo-wifi-esp8266-esp-01
 - Selecione o menu `Tools`, em seguida `Board` e selecione a placa `Generic ESP8266 Module`.
 - Selecione a porta USB correta no menu `Tools` e efetue o upload do código no ESP8266.
+- Selecionar o menu `Tools` e depois `Flash Size` e escolher a opção `1M FS:144Kb`.
 - Terminado o upload você precisará subir os arquivos da pasta `data`, para isso acesse o menu `Tools` novamente e clique no plugin `ESP8266 LittleFS Data Upload`.
 
 Pronto! O código e os dados estão publicados no ESP8266!

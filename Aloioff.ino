@@ -9,7 +9,7 @@
 #include "fauxmoESP.h"
 
 #ifndef APSSID
-#define APSSID "ALOITECH"
+#define APSSID "ALOIOFF"
 #define APPSK  "12345678"
 #endif
 
@@ -46,6 +46,8 @@ void setup() {
     initAlexa();
   }
   else {
+    pinMode(RELE, OUTPUT);
+    digitalWrite(RELE, LOW);
     server.begin();
     if (DEBUG) Serial.println("Servidor iniciado!");
   }

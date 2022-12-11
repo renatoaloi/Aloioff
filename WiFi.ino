@@ -59,20 +59,22 @@ void initWiFi()
   }
 }
 
-void handleDelay()
+void handleRelay()
 {
-  char *status = server.arg(0).c_str();
+  const char *status = server.arg(0).c_str();
+  if (DEBUG) Serial.println(status);
 
   if ((strcmp(status, "1") == 0))
   {
-    if (state)
-    {
-      digitalWrite(RELE, LOW);
-    }
-    else
-    {
-      digitalWrite(RELE, HIGH);
-    }
+    if (DEBUG)
+      Serial.println("Desligando rele manualmente");
+    digitalWrite(RELE, LOW);
+  }
+  else
+  {
+    if (DEBUG)
+      Serial.println("Ligando rele manualmente");
+    digitalWrite(RELE, HIGH);
   }
 
   server.sendHeader("Location", String("/manual.html"), true);

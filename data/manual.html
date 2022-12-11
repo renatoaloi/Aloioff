@@ -47,15 +47,18 @@
                         <div class="card-header">
                             <h2>Ação Manual</h2>
                         </div>
-                        <form id="formLiga" method="GET" action="/relay?status=1"></form>
-                        <div class="card-footer">
-                            <button id="ligar" type="submit" class="btn btn-success">Ligar</button>
-                        </div>
+                        <form id="formLiga" method="GET" action="/relay">
+                            <input type="hidden" name="status" value="0" />
+                            <div class="card-footer">
+                                <button id="ligar" type="submit" class="btn btn-success">Ligar</button>
+                            </div>
                         </form>
-                        <form id="formDesliga" method="GET" action="/relay?status=0"></form>
-                        <div class="card-footer">
-                            <button id="desligar" type="submit" class="btn btn-success">Desligar</button>
-                        </div>
+                        <p>&nbsp;</p>
+                        <form id="formDesliga" method="GET" action="/relay">
+                            <input type="hidden" name="status" value="1" />
+                            <div class="card-footer">
+                                <button id="desligar" type="submit" class="btn btn-danger">Desligar</button>
+                            </div>
                         </form>
                     </div>
                 </div>
