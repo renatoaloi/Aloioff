@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ALOITECH - Wi-Fi do Dispositivo Tomada Inteligente</title>
+    <title>ALOITECH - Modo de Operação do Dispositivo</title>
     <link rel="stylesheet" href="css/site.css" />
     <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <script src="js/site.js"></script>
+    <script src="js/site.js?v=2"></script>
 </head>
 
 <body>
@@ -23,10 +23,10 @@
                 <a href="index.html" class="dashboard-nav-item">
                     Home
                 </a>
-                <a href="config.html" class="dashboard-nav-item">
+                <a href="#" class="dashboard-nav-item active">
                     Dispositivo
                 </a>
-                <a href="#" class="dashboard-nav-item active">
+                <a href="wifi.html" class="dashboard-nav-item">
                     Wi-Fi
                 </a>
                 <a href="modo.html" class="dashboard-nav-item">
@@ -43,27 +43,31 @@
             </header>
             <div class="dashboard-content">
                 <div class="container">
-                    <form id="formNome" method="GET" action="/wifi/config">
+                    <form id="formModo" method="GET" action="/modo">
                         <div class="card">
                             <div class="card-header">
-                                <h2>Wi-Fi do Dispositivo Tomada Inteligente</h2>
+                                <h2>Modo de Operação</h2>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="ssid">Qual o SSID do seu Wi-Fi?</label>
-                                    <input type="text" class="form-control" id="ssid" name="ssid"
-                                        aria-describedby="nomeHelp" placeholder="Digite o nome">
-                                    <small id="nomeHelp" class="form-text text-muted">Nome da sua rede wifi</small>
-                                </div>
-                                <div class="form-group">
-                                    <label for="password">Qual a senha do seu Wi-Fi?</label>
-                                    <input type="text" class="form-control" id="password" name="password"
-                                        aria-describedby="senhaHelp" placeholder="Digite a senha">
-                                    <small id="senhaHelp" class="form-text text-muted">Senha da sua rede wifi</small>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="modo" id="modoAlexa"
+                                            value="1">
+                                        <label class="form-check-label" for="modoAlexa">
+                                            Acionamento por voz pela Alexa
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="modo" id="modoSmartphone"
+                                            value="2">
+                                        <label class="form-check-label" for="modoSmartphone">
+                                            Acionamento por Smartphone
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button id="salvar" class="btn btn-primary">Salvar</button>
+                                <button id="salvar" type="submit" class="btn btn-primary">Salvar</button>
                             </div>
                         </div>
                     </form>
@@ -72,27 +76,20 @@
         </div>
     </div>
     <script>
-        document.getElementById('ssid').disabled = true;
-        document.getElementById('password').disabled = true;
+        document.getElementById('modoAlexa').disabled = true;
+        document.getElementById('modoSmartphone').disabled = true;
         document.getElementById('salvar').disabled = true;
         setTimeout(() => {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 console.log(this.responseText);
                 if (this.readyState == 4 && this.status == 200) {
-                    const responseSplit = this.responseText.split('|');
-                    var ssid = "";
-                    var password = "";
-                    if (responseSplit.length == 2) {
-                        document.getElementById('ssid').value = responseSplit[0];
-                        document.getElementById('password').value = responseSplit[1];
-                        document.getElementById('ssid').disabled = false;
-                        document.getElementById('password').disabled = false;
-                        document.getElementById('salvar').disabled = false;
-                    }
+                    document.getElementById('nomeDispositivo').value = this.responseText;
+                    document.getElementById('nomeDispositivo').disabled = false;
+                    document.getElementById('salvar').disabled = false;
                 }
             }
-            xhttp.open("GET", "/wifi/state", true);
+            xhttp.open("GET", "/dispositivo/state", true);
             xhttp.send();
         }, 1000);
     </script>
