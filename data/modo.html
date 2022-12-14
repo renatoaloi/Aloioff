@@ -84,12 +84,24 @@
             xhttp.onreadystatechange = function () {
                 console.log(this.responseText);
                 if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById('nomeDispositivo').value = this.responseText;
-                    document.getElementById('nomeDispositivo').disabled = false;
+                    if (this.responseText === "1") {
+                        document.getElementById('modoAlexa').checked = true;
+                        document.getElementById('modoSmartphone').checked = false;
+                    }
+                    else if (this.responseText === "2") {
+                        document.getElementById('modoAlexa').checked = false;
+                        document.getElementById('modoSmartphone').checked = true;
+                    }
+                    else {
+                        document.getElementById('modoAlexa').checked = true;
+                        document.getElementById('modoSmartphone').checked = false;
+                    }
+                    document.getElementById('nomeAlexa').disabled = false;
+                    document.getElementById('nomeSmartphone').disabled = false;
                     document.getElementById('salvar').disabled = false;
                 }
             }
-            xhttp.open("GET", "/dispositivo/state", true);
+            xhttp.open("GET", "/modo/state", true);
             xhttp.send();
         }, 1000);
     </script>

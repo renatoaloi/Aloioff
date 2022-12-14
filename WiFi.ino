@@ -22,6 +22,8 @@ void initWiFi()
     server.on("/test", handleTest);
     server.on("/dispositivo", handleDevice);
     server.on("/dispositivo/state", handleDispositivoState);
+    server.on("/modo", handleModoOperacao);
+    server.on("/modo/state", handleModoOperacaoState);
     server.on("/wifi/config", handleWifiConfig);
     server.on("/wifi/state", handleWifiState);
     server.on("/relay", handleRelay);
@@ -45,7 +47,7 @@ void initWiFi()
         Serial.print(".");
       if (checkButton())
       {
-        SaveUserConfig("", "", "");
+        SaveUserConfig("", "", "", 0);
         SaveModoAP();
         ResetDevice();
       }
@@ -62,7 +64,8 @@ void initWiFi()
 void handleRelay()
 {
   const char *status = server.arg(0).c_str();
-  if (DEBUG) Serial.println(status);
+  if (DEBUG)
+    Serial.println(status);
 
   if ((strcmp(status, "1") == 0))
   {
@@ -108,11 +111,33 @@ void handleDispositivoState()
   server.send(200, "text/plain", GetDispositivo());
 }
 
+void handleModoOperacaoState()
+{
+  byte _ret = GetModoOperacao();
+  char* _retstr;
+  if (_ret == 1) strcpy(_retstr, "1");
+  if (_ret == 2) strcpy(_retstr, "2");
+  server.send(200, "text/plain", _retstr);
+}
+
 void handleDevice()
 {
   SaveDevice(server.arg(0).c_str());
-  // server.send(200, "text/html", "<h1>Dispositivo: " + server.arg(0) + "</h1>");
   server.sendHeader("Location", String("/config.html"), true);
+  server.send(302, "text/plain", "");
+}
+
+void handleModoOperacao()
+{
+  const char* _retstr = server.arg(0).c_str();
+  byte _ret;
+  if (_retstr == "1") {
+    _ret = 1;
+  } else {
+    _ret = 2;
+  }
+  SaveModoOperacao(_ret);
+  server.sendHeader("Location", String("/modo.html"), true);
   server.send(302, "text/plain", "");
 }
 
@@ -126,7 +151,6 @@ void handleWifiConfig()
     Serial.println(server.arg(1).c_str());
   }
   SaveWifiConfig(server.arg(0).c_str(), server.arg(1).c_str());
-  // server.send(200, "text/html", "<h1>Wifi ssid: " + server.arg(0) + ", Wifi pass: " + server.arg(1) + "</h1>");
   server.sendHeader("Location", String("/wifi.html"), true);
   server.send(302, "text/plain", "");
 }

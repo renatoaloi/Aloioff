@@ -18,12 +18,13 @@ void initUserConfig()
   EEPROM.begin(512);
 }
 
-void SaveUserConfig(char *_ssid, char *_password, char *_dispositivo)
+void SaveUserConfig(char *_ssid, char *_password, char *_dispositivo, byte _modo)
 {
   userConfig.id = UserId;
   strcpy(userConfig.ssid, _ssid);
   strcpy(userConfig.password, _password);
   strcpy(userConfig.dispositivo, _dispositivo);
+  userConfig.modoOperacao = _modo;
   userConfig.modoAP = false;
   EEPROM.put(eeAddress, userConfig);
   EEPROM.commit();
@@ -60,6 +61,14 @@ void SaveDevice(const char *_device)
   EEPROM.commit();
 }
 
+void SaveModoOperacao(const byte _modo)
+{
+  GetUserConfig();
+  userConfig.modoOperacao = _modo;
+  EEPROM.put(eeAddress, userConfig);
+  EEPROM.commit();
+}
+
 char *GetWifiSsid()
 {
   return userConfig.ssid;
@@ -73,6 +82,11 @@ char *GetWifiPassword()
 char *GetDispositivo()
 {
   return userConfig.dispositivo;
+}
+
+byte GetModoOperacao()
+{
+  return userConfig.modoOperacao;
 }
 
 void GetUserConfig()
