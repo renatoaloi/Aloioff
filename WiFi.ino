@@ -113,11 +113,11 @@ void handleDispositivoState()
 
 void handleModoOperacaoState()
 {
+  if (DEBUG) Serial.println("Inicio handle modo operacao state");
   byte _ret = GetModoOperacao();
-  char* _retstr;
-  if (_ret == 1) strcpy(_retstr, "1");
-  if (_ret == 2) strcpy(_retstr, "2");
-  server.send(200, "text/plain", _retstr);
+  if (_ret == 1) server.send(200, "text/plain", "1");
+  if (_ret == 2) server.send(200, "text/plain", "2");
+  server.send(200, "text/plain", "0");
 }
 
 void handleDevice()

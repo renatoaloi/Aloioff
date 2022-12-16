@@ -86,6 +86,11 @@ char *GetDispositivo()
 
 byte GetModoOperacao()
 {
+  if (DEBUG)
+  {
+    Serial.print("Modo Operacao: ");
+    Serial.println(userConfig.modoOperacao);
+  }
   return userConfig.modoOperacao;
 }
 
