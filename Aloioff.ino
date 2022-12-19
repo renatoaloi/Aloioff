@@ -95,18 +95,17 @@ void loop()
     byte modoOperacao = GetModoOperacao();
     if (modoOperacao == 1)
     {
-      Serial.println("Handle ALEXA!");
       alexaHandle();
     }
     else if (modoOperacao == 2)
     {
-      Serial.println("Handle SMARTPHONE!");
       smartphoneHandle();
     }
     else
     {
       if (DEBUG)
         Serial.println("Handle invalido!");
+      return;
     }
   }
   else
