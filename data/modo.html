@@ -46,7 +46,7 @@
                     <form id="formModo" method="GET" action="/modo">
                         <div class="card">
                             <div class="card-header">
-                                <h2>Modo de Operação</h2>
+                                <h2>Modo de Operação</h2><span id="logteste"></span>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
@@ -79,11 +79,13 @@
         document.getElementById('modoAlexa').disabled = true;
         document.getElementById('modoSmartphone').disabled = true;
         document.getElementById('salvar').disabled = true;
+        document.getElementById('logteste').innerHTML = "Iniciou!";
         setTimeout(() => {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 console.log(this.responseText);
                 if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById('logteste').innerHTML = "Retornou!";
                     if (this.responseText === "1") {
                         document.getElementById('modoAlexa').checked = true;
                         document.getElementById('modoSmartphone').checked = false;
@@ -96,13 +98,14 @@
                         document.getElementById('modoAlexa').checked = true;
                         document.getElementById('modoSmartphone').checked = false;
                     }
-                    document.getElementById('nomeAlexa').disabled = false;
-                    document.getElementById('nomeSmartphone').disabled = false;
+                    document.getElementById('modoAlexa').disabled = false;
+                    document.getElementById('modoSmartphone').disabled = false;
                     document.getElementById('salvar').disabled = false;
                 }
             }
             xhttp.open("GET", "/modo/state", true);
             xhttp.send();
+            document.getElementById('logteste').innerHTML = "Enviou!";
         }, 1000);
     </script>
 </body>

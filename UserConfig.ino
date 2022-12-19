@@ -145,5 +145,5 @@ bool CheckUserConfig()
 {
   return strlen(userConfig.ssid) != 0 && strlen(userConfig.password) != 0 &&
          ((strlen(userConfig.dispositivo) != 0 && userConfig.modoOperacao == 1) ||
-          (userConfig.modoOperacao != 2));
+          (userConfig.modoOperacao == 2));
 }

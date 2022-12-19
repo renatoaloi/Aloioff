@@ -113,11 +113,15 @@ void handleDispositivoState()
 
 void handleModoOperacaoState()
 {
-  if (DEBUG) Serial.println("Inicio handle modo operacao state");
+  if (DEBUG)
+    Serial.println("Inicio handle modo operacao state");
   byte _ret = GetModoOperacao();
-  if (_ret == 1) server.send(200, "text/plain", "1");
-  if (_ret == 2) server.send(200, "text/plain", "2");
-  server.send(200, "text/plain", "0");
+  if (_ret == 1)
+    server.send(200, "text/plain", "1");
+  else if (_ret == 2)
+    server.send(200, "text/plain", "2");
+  else
+    server.send(200, "text/plain", "0");
 }
 
 void handleDevice()
@@ -129,12 +133,22 @@ void handleDevice()
 
 void handleModoOperacao()
 {
-  const char* _retstr = server.arg(0).c_str();
+  const char *_retstr = server.arg(0).c_str();
   byte _ret;
-  if (_retstr == "1") {
+  if (_retstr[0] == '1')
+  {
     _ret = 1;
-  } else {
+  }
+  else
+  {
     _ret = 2;
+  }
+  if (DEBUG)
+  {
+    Serial.print("Server arg: ");
+    Serial.println(_retstr);
+    Serial.print("Modo Operacao: ");
+    Serial.println(_ret);
   }
   SaveModoOperacao(_ret);
   server.sendHeader("Location", String("/modo.html"), true);

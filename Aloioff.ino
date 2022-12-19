@@ -47,9 +47,29 @@ void setup()
   configUser();
   configButton();
   initWiFi();
+  if (DEBUG)
+  {
+    Serial.print("Checkuserconfig: ");
+    Serial.println(CheckUserConfig() ? "true" : "false");
+  }
   if (!isUserConfigModeAP() && CheckUserConfig())
   {
-    initAlexa();
+    byte modoOperacao = GetModoOperacao();
+    if (modoOperacao == 1)
+    {
+      Serial.println("Modo de operacao ALEXA!");
+      initAlexa();
+    }
+    else if (modoOperacao == 2)
+    {
+      Serial.println("Modo de operacao SMARTPHONE!");
+      initSmartphone();
+    }
+    else
+    {
+      if (DEBUG)
+        Serial.println("Modo de operacao invalido!");
+    }
   }
   else
   {
@@ -72,7 +92,22 @@ void loop()
   if (!isUserConfigModeAP() && CheckUserConfig())
   {
     // terminou de configura modo ap
-    alexaHandle();
+    byte modoOperacao = GetModoOperacao();
+    if (modoOperacao == 1)
+    {
+      Serial.println("Handle ALEXA!");
+      alexaHandle();
+    }
+    else if (modoOperacao == 2)
+    {
+      Serial.println("Handle SMARTPHONE!");
+      smartphoneHandle();
+    }
+    else
+    {
+      if (DEBUG)
+        Serial.println("Handle invalido!");
+    }
   }
   else
   {
