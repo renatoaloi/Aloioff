@@ -1,6 +1,16 @@
 void initSmartphone()
 {
-    server.on("/sp", handleSmartphone);
+    configureRelayPortAndStartWebServer();
+    server.on("/", handleAcionamentoManual);
+    server.on("/teste", handleSmartphone);
+    server.on("/relay", handleRelay);
+    server.onNotFound(handleFileSystem);
+}
+
+void handleAcionamentoManual()
+{
+    server.sendHeader("Location", String("/manual.html"), true);
+    server.send(302, "text/plain", "");
 }
 
 void smartphoneHandle()

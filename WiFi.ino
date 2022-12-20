@@ -45,12 +45,7 @@ void initWiFi()
       delay(500);
       if (DEBUG)
         Serial.print(".");
-      if (checkButton())
-      {
-        SaveUserConfig("", "", "", 0);
-        SaveModoAP();
-        ResetDevice();
-      }
+      checkButtonForResetAndCleanEeprom();
     }
     if (DEBUG)
     {
