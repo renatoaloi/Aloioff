@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ALOITECH - Nome do Dispositivo Alexa Relê</title>
+    <title>ALOITECH - Modo de Operação do Dispositivo</title>
     <link rel="stylesheet" href="css/site.css" />
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <script src="js/site.js?v=2"></script>
@@ -43,28 +43,28 @@
             </header>
             <div class="dashboard-content">
                 <div class="container">
-                    <form id="formNome" method="GET" action="/dispositivo">
+                    <form id="formModo" method="GET" action="/modo">
                         <div class="card">
                             <div class="card-header">
-                                <h2>Nome do Dispositivo Alexa Relê</h2>
+                                <h2>Modo de Operação</h2><span id="logteste"></span>
                             </div>
                             <div class="card-body">
-
                                 <div class="form-group">
-                                    <label for="nomeDispositivo">Qual o nome do seu dispositivo?</label>
-                                    <input type="text" class="form-control" id="nomeDispositivo" name="nomeDispositivo"
-                                        aria-describedby="nomeHelp" placeholder="Digite o nome">
-                                    <small id="nomeHelp" class="form-text text-muted">Este nome será usado para
-                                        ativar o dispositivo.
-                                        <div>
-                                            <i>Exemplo</i>: "Alexa, ligue a lâmpada" (onde
-                                            <strong>lâmpada</strong> é o nome do
-                                            seu
-                                            dispositivo)
-                                        </div>
-                                    </small>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="modo" id="modoAlexa"
+                                            value="1">
+                                        <label class="form-check-label" for="modoAlexa">
+                                            Acionamento por voz pela Alexa
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="modo" id="modoSmartphone"
+                                            value="2">
+                                        <label class="form-check-label" for="modoSmartphone">
+                                            Acionamento por Smartphone
+                                        </label>
+                                    </div>
                                 </div>
-
                             </div>
                             <div class="card-footer">
                                 <button id="salvar" type="submit" class="btn btn-primary">Salvar</button>
@@ -76,20 +76,36 @@
         </div>
     </div>
     <script>
-        document.getElementById('nomeDispositivo').disabled = true;
+        document.getElementById('modoAlexa').disabled = true;
+        document.getElementById('modoSmartphone').disabled = true;
         document.getElementById('salvar').disabled = true;
+        document.getElementById('logteste').innerHTML = "Iniciou!";
         setTimeout(() => {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 console.log(this.responseText);
                 if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById('nomeDispositivo').value = this.responseText;
-                    document.getElementById('nomeDispositivo').disabled = false;
+                    document.getElementById('logteste').innerHTML = "Retornou!";
+                    if (this.responseText === "1") {
+                        document.getElementById('modoAlexa').checked = true;
+                        document.getElementById('modoSmartphone').checked = false;
+                    }
+                    else if (this.responseText === "2") {
+                        document.getElementById('modoAlexa').checked = false;
+                        document.getElementById('modoSmartphone').checked = true;
+                    }
+                    else {
+                        document.getElementById('modoAlexa').checked = true;
+                        document.getElementById('modoSmartphone').checked = false;
+                    }
+                    document.getElementById('modoAlexa').disabled = false;
+                    document.getElementById('modoSmartphone').disabled = false;
                     document.getElementById('salvar').disabled = false;
                 }
             }
-            xhttp.open("GET", "/dispositivo/state", true);
+            xhttp.open("GET", "/modo/state", true);
             xhttp.send();
+            document.getElementById('logteste').innerHTML = "Enviou!";
         }, 1000);
     </script>
 </body>
