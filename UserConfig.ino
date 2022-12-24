@@ -15,7 +15,7 @@ static struct UserConfig userConfig;
 
 void initUserConfig()
 {
-  EEPROM.begin(512);
+  EEPROM.begin(EEPROM_SIZE);
 }
 
 void commitUserConfig()
@@ -127,11 +127,12 @@ bool isUserConfigModeAP()
 
 void ClearUserConfig()
 {
-  for (int i = 0; i < 512; i++)
+  for (int i = 0; i < EEPROM_SIZE; i++)
   {
     EEPROM.write(i, 0);
   }
   EEPROM.commit();
+  delay(150);
 }
 
 void configUser()
