@@ -16,8 +16,8 @@
 #define RELE 0
 #define BUTTON 3
 #define DEBUG 0
-#define DEBUG_REMOTO 1
-#define EEPROM_SIZE 64
+#define DEBUG_REMOTO 0
+#define EEPROM_SIZE 128
 
 const char *ssid = APSSID;
 const char *password = APPSK;
