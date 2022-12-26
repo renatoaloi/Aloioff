@@ -15,7 +15,23 @@ static struct UserConfig userConfig;
 
 void initUserConfig()
 {
-  EEPROM.begin(512);
+  EEPROM.begin(EEPROM_SIZE);
+}
+
+void commitUserConfig()
+{
+  EEPROM.put(eeAddress, userConfig);
+  if (EEPROM.commit())
+  {
+    if (DEBUG)
+      Serial.println("EEPROM commited successfully");
+  }
+  else
+  {
+    if (DEBUG)
+      Serial.println("Error commiting EEPROM!");
+  }
+  delay(150);
 }
 
 void SaveUserConfig(char *_ssid, char *_password, char *_dispositivo, byte _modo)
@@ -26,22 +42,19 @@ void SaveUserConfig(char *_ssid, char *_password, char *_dispositivo, byte _modo
   strcpy(userConfig.dispositivo, _dispositivo);
   userConfig.modoOperacao = _modo;
   userConfig.modoAP = false;
-  EEPROM.put(eeAddress, userConfig);
-  EEPROM.commit();
+  commitUserConfig();
 }
 
 void SaveModoAP()
 {
   userConfig.modoAP = true;
-  EEPROM.put(eeAddress, userConfig);
-  EEPROM.commit();
+  commitUserConfig();
 }
 
 void TurnOffModoAP()
 {
   userConfig.modoAP = false;
-  EEPROM.put(eeAddress, userConfig);
-  EEPROM.commit();
+  commitUserConfig();
 }
 
 void SaveWifiConfig(const char *_ssid, const char *_pass)
@@ -49,24 +62,21 @@ void SaveWifiConfig(const char *_ssid, const char *_pass)
   GetUserConfig();
   strcpy(userConfig.ssid, _ssid);
   strcpy(userConfig.password, _pass);
-  EEPROM.put(eeAddress, userConfig);
-  EEPROM.commit();
+  commitUserConfig();
 }
 
 void SaveDevice(const char *_device)
 {
   GetUserConfig();
   strcpy(userConfig.dispositivo, _device);
-  EEPROM.put(eeAddress, userConfig);
-  EEPROM.commit();
+  commitUserConfig();
 }
 
 void SaveModoOperacao(const byte _modo)
 {
   GetUserConfig();
   userConfig.modoOperacao = _modo;
-  EEPROM.put(eeAddress, userConfig);
-  EEPROM.commit();
+  commitUserConfig();
 }
 
 char *GetWifiSsid()
@@ -117,11 +127,12 @@ bool isUserConfigModeAP()
 
 void ClearUserConfig()
 {
-  for (int i = 0; i < 512; i++)
+  for (int i = 0; i < EEPROM_SIZE; i++)
   {
     EEPROM.write(i, 0);
   }
   EEPROM.commit();
+  delay(150);
 }
 
 void configUser()

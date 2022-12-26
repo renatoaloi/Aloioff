@@ -1,6 +1,6 @@
 void initSerial()
 {
-  if (DEBUG)
+  if (DEBUG || DEBUG_REMOTO)
     Serial.begin(115200);
   delay(500);
 }
@@ -37,12 +37,14 @@ void checkAndSelectSetupOperationMode()
     byte modoOperacao = GetModoOperacao();
     if (modoOperacao == 1)
     {
-      Serial.println("Modo de operacao ALEXA!");
+      if (DEBUG)
+        Serial.println("Modo de operacao ALEXA!");
       initAlexa();
     }
     else if (modoOperacao == 2)
     {
-      Serial.println("Modo de operacao SMARTPHONE!");
+      if (DEBUG)
+        Serial.println("Modo de operacao SMARTPHONE!");
       initSmartphone();
     }
     else

@@ -15,7 +15,10 @@ void handleAcionamentoManual()
 
 void smartphoneHandle()
 {
-    server.handleClient();
+    if (!IsWiFiNotConnected())
+        server.handleClient();
+    // else
+    //     ConnectWiFiSTA();
 }
 
 void handleSmartphone()

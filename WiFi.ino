@@ -1,3 +1,26 @@
+bool IsWiFiNotConnected()
+{
+  return WiFi.status() != WL_CONNECTED;
+}
+
+void WaitForConnection()
+{
+  while (IsWiFiNotConnected())
+  {
+    delay(500);
+    if (DEBUG)
+      Serial.print(".");
+    checkButtonForResetAndCleanEeprom();
+  }
+}
+
+void ConnectWiFiSTA()
+{
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(GetWifiSsid(), GetWifiPassword());
+  WaitForConnection();
+}
+
 void initWiFi()
 {
   if (isUserConfigModeAP())
@@ -37,16 +60,7 @@ void initWiFi()
     // WI-FI INIT
     if (DEBUG)
       Serial.printf("Connecting to %s\n", GetWifiSsid());
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(GetWifiSsid(), GetWifiPassword());
-    // Wait for connection
-    while (WiFi.status() != WL_CONNECTED)
-    {
-      delay(500);
-      if (DEBUG)
-        Serial.print(".");
-      checkButtonForResetAndCleanEeprom();
-    }
+    ConnectWiFiSTA();
     if (DEBUG)
     {
       Serial.println("");
