@@ -1,155 +1,107 @@
-
-struct UserConfig
-{
-  int id;
-  char ssid[20];
-  char password[20];
-  char dispositivo[20];
-  bool modoAP;
-  byte modoOperacao;
-};
-
-int UserId = 91285;
-int eeAddress = 0;
-static struct UserConfig userConfig;
-
 void initUserConfig()
 {
-  EEPROM.begin(EEPROM_SIZE);
+    initEEPROM();
+    delay(150);
+    getUserConfig();
+    if (userConfig.id != UserId)
+    {
+        clearEEPROM();
+    }
 }
 
-void commitUserConfig()
+void saveUserConfig(char *_ssid, char *_password, char *_dispositivo, byte _modo, bool _modoAP)
 {
-  EEPROM.put(eeAddress, userConfig);
-  if (EEPROM.commit())
-  {
+    userConfig.id = UserId;
+    strcpy(userConfig.ssid, _ssid);
+    strcpy(userConfig.password, _password);
+    strcpy(userConfig.dispositivo, _dispositivo);
+    userConfig.modoOperacao = _modo;
+    userConfig.modoAP = _modoAP;
+    commitEEPROM(eeAddress);
+}
+
+void saveModoAP(bool _modo)
+{
+    saveUserConfig(
+        userConfig.ssid,
+        userConfig.password,
+        userConfig.dispositivo,
+        userConfig.modoOperacao,
+        _modo);
+}
+
+void saveWifiConfig(char *_ssid, char *_pass)
+{
+    saveUserConfig(
+        _ssid,
+        _pass,
+        userConfig.dispositivo,
+        userConfig.modoOperacao,
+        userConfig.modoAP);
+}
+
+void saveDevice(char *_device)
+{
+    saveUserConfig(
+        userConfig.ssid,
+        userConfig.password,
+        _device,
+        userConfig.modoOperacao,
+        userConfig.modoAP);
+}
+
+void saveModoOperacao(byte _modo)
+{
+    saveUserConfig(
+        userConfig.ssid,
+        userConfig.password,
+        userConfig.dispositivo,
+        _modo,
+        userConfig.modoAP);
+}
+
+char *getWifiSsid()
+{
+    return userConfig.ssid;
+}
+
+char *getWifiPassword()
+{
+    return userConfig.password;
+}
+
+char *getDispositivo()
+{
+    return userConfig.dispositivo;
+}
+
+byte getModoOperacao()
+{
+    return userConfig.modoOperacao;
+}
+
+bool getModoAP()
+{
+    return userConfig.modoAP;
+}
+
+void getUserConfig()
+{
+    getEEPROM(eeAddress);
     if (DEBUG)
-      Serial.println("EEPROM commited successfully");
-  }
-  else
-  {
-    if (DEBUG)
-      Serial.println("Error commiting EEPROM!");
-  }
-  delay(150);
-}
-
-void SaveUserConfig(char *_ssid, char *_password, char *_dispositivo, byte _modo)
-{
-  userConfig.id = UserId;
-  strcpy(userConfig.ssid, _ssid);
-  strcpy(userConfig.password, _password);
-  strcpy(userConfig.dispositivo, _dispositivo);
-  userConfig.modoOperacao = _modo;
-  userConfig.modoAP = false;
-  commitUserConfig();
-}
-
-void SaveModoAP()
-{
-  userConfig.modoAP = true;
-  commitUserConfig();
-}
-
-void TurnOffModoAP()
-{
-  userConfig.modoAP = false;
-  commitUserConfig();
-}
-
-void SaveWifiConfig(const char *_ssid, const char *_pass)
-{
-  GetUserConfig();
-  strcpy(userConfig.ssid, _ssid);
-  strcpy(userConfig.password, _pass);
-  commitUserConfig();
-}
-
-void SaveDevice(const char *_device)
-{
-  GetUserConfig();
-  strcpy(userConfig.dispositivo, _device);
-  commitUserConfig();
-}
-
-void SaveModoOperacao(const byte _modo)
-{
-  GetUserConfig();
-  userConfig.modoOperacao = _modo;
-  commitUserConfig();
-}
-
-char *GetWifiSsid()
-{
-  return userConfig.ssid;
-}
-
-char *GetWifiPassword()
-{
-  return userConfig.password;
-}
-
-char *GetDispositivo()
-{
-  return userConfig.dispositivo;
-}
-
-byte GetModoOperacao()
-{
-  return userConfig.modoOperacao;
-}
-
-void GetUserConfig()
-{
-  EEPROM.get(eeAddress, userConfig);
-  if (DEBUG)
-  {
-    Serial.print("id: ");
-    Serial.println(userConfig.id);
-    Serial.print("ssid: ");
-    Serial.println(userConfig.ssid);
-    Serial.print("password: ");
-    Serial.println(userConfig.password);
-    Serial.print("dispositivo: ");
-    Serial.println(userConfig.dispositivo);
-    Serial.print("Modo AP ");
-    Serial.println(userConfig.modoAP ? "ligado!" : "desligado!");
-    Serial.print("Modo de Operacao ");
-    Serial.println(userConfig.modoOperacao == 1 ? "Alexa" : userConfig.modoOperacao == 2 ? "Smartphone"
-                                                                                         : "Nao implementado");
-  }
-}
-
-bool isUserConfigModeAP()
-{
-  return userConfig.modoAP;
-}
-
-void ClearUserConfig()
-{
-  for (int i = 0; i < EEPROM_SIZE; i++)
-  {
-    EEPROM.write(i, 0);
-  }
-  EEPROM.commit();
-  delay(150);
-}
-
-void configUser()
-{
-  initUserConfig();
-  GetUserConfig();
-  if (userConfig.id != UserId)
-  {
-    ClearUserConfig();
-    SaveUserConfig("", "", "", 0);
-    ResetDevice();
-  }
-}
-
-bool CheckUserConfig()
-{
-  return strlen(userConfig.ssid) != 0 && strlen(userConfig.password) != 0 &&
-         ((strlen(userConfig.dispositivo) != 0 && userConfig.modoOperacao == 1) ||
-          (userConfig.modoOperacao == 2));
+    {
+        Serial.print("id: ");
+        Serial.println(userConfig.id);
+        Serial.print("ssid: ");
+        Serial.println(userConfig.ssid);
+        Serial.print("password: ");
+        Serial.println(userConfig.password);
+        Serial.print("dispositivo: ");
+        Serial.println(userConfig.dispositivo);
+        Serial.print("Modo AP ");
+        Serial.println(userConfig.modoAP ? "ligado!" : "desligado!");
+        Serial.print("Modo de Operacao ");
+        Serial.println(userConfig.modoOperacao == 1 ? "Alexa" : userConfig.modoOperacao == 2 ? "Smartphone"
+                                                                                             : "Nao implementado");
+    }
 }

@@ -21,7 +21,7 @@
 
 const char *ssid = APSSID;
 const char *password = APPSK;
-const char *host = "aloitech";
+const char *host = "aloioff";
 
 IPAddress local_IP(10, 0, 0, 1);
 IPAddress gateway(10, 0, 0, 1);
@@ -31,20 +31,51 @@ ESP8266WebServer server(80);
 
 fauxmoESP fauxmo;
 
+struct UserConfig
+{
+  int id;
+  char ssid[20];
+  char password[20];
+  char dispositivo[20];
+  bool modoAP;
+  byte modoOperacao;
+};
+
+int UserId = 91286;
+int eeAddress = 0;
+static struct UserConfig userConfig;
+
 static const char TEXT_PLAIN[] PROGMEM = "text/plain";
 
 void setup()
 {
-  initSerial();
-  configUser();
-  initFileSystem();
-  configButton();
-  initWiFi();
-  checkAndSelectSetupOperationMode();
+  initUserConfig();
+
+  if (getModoAP())
+  {
+    // Modo AP
+    // ligarWebServer();
+  }
+  else
+  {
+    // Modo de operacao STATION
+    // depois que modo AP for configurado
+    if (getModoOperacao() == 1)
+    {
+      // initAlexa();
+    }
+    else if (getModoOperacao() == 2)
+    {
+      // initSmartphone();
+    }
+    else
+    {
+      // Not implemented
+    }
+  }
 }
 
 void loop()
 {
-  checkButtonForResetAndCleanEeprom();
-  checkAndSelectLoopOperationMode();
+  // handleWebServer();
 }
