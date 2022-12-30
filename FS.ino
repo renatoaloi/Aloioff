@@ -17,3 +17,8 @@ void closeFile(File file)
 {
     file.close();
 }
+
+void endFS()
+{
+    LittleFS.end();
+}
