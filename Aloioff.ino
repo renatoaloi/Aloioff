@@ -54,7 +54,7 @@ void setup()
   if (getModoAP())
   {
     // Modo AP
-    // ligarWebServer();
+    ligarWebServerModoAP();
   }
   else
   {
@@ -77,5 +77,5 @@ void setup()
 
 void loop()
 {
-  // handleWebServer();
+  handleWebServer();
 }
