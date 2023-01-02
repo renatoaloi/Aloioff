@@ -41,7 +41,9 @@ struct UserConfig
   byte modoOperacao;
 };
 
-int UserId = 91286;
+unsigned long tempoOpenedFile = 0L;
+static bool openedFile = false;
+int UserId = 91287;
 int eeAddress = 0;
 static struct UserConfig userConfig;
 
@@ -49,6 +51,9 @@ static const char TEXT_PLAIN[] PROGMEM = "text/plain";
 
 void setup()
 {
+  if (DEBUG)
+    Serial.begin(115200);
+
   initUserConfig();
 
   if (getModoAP())

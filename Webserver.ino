@@ -1,8 +1,12 @@
 void initWebServerModoAP()
 {
+    server.begin();
+    if (DEBUG)
+        Serial.println("Servidor iniciado!");
+
     server.on("/test", handleTest);
     server.on("/dispositivo", handleDevice);
-    server.on("/dispositivo/state", handleDispositivoState);
+    server.on("/dispositivo/state", handleDeviceState);
     server.on("/modo", handleModoOperacao);
     server.on("/modo/state", handleModoOperacaoState);
     server.on("/wifi/config", handleWifiConfig);
@@ -18,9 +22,19 @@ void handleWebServer()
         server.handleClient();
 }
 
+void handleDevice()
+{
+    saveDevice(server.arg(0).c_str());
+    handleDeviceState();
+}
+
+void handleDeviceState()
+{
+    server.send(200, "text/plain", getDispositivo());
+}
+
 void handleTest() {}
-void handleDevice() {}
-void handleDispositivoState() {}
+
 void handleModoOperacao() {}
 void handleModoOperacaoState() {}
 void handleWifiConfig() {}
@@ -38,8 +52,20 @@ void handleFileSystem()
     }
     if (pathExists(path))
     {
-        File file = openFile(path);
-        server.streamFile(file, contentType) != file.size();
-        closeFile(file);
+        tempoOpenedFile = millis() + 5000;
+        while (openedFile && millis() < tempoOpenedFile)
+        {
+            delay(10);
+        };
+        if (millis() > tempoOpenedFile)
+        {
+            server.send(500, "text/plain", "Tempo expirado tentando abrir arquivo!");
+        }
+        else
+        {
+            File file = openFile(path);
+            server.streamFile(file, contentType);
+            closeFile(file);
+        }
     }
 }

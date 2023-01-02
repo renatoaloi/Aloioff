@@ -43,7 +43,7 @@
             </header>
             <div class="dashboard-content">
                 <div class="container">
-                    <form id="formNome" method="GET" action="/dispositivo">
+                    <form id="formDevice" method="GET" action="/dispositivo">
                         <div class="card">
                             <div class="card-header">
                                 <h2>Nome do Dispositivo Alexa Relê</h2>
@@ -67,7 +67,8 @@
 
                             </div>
                             <div class="card-footer">
-                                <button id="salvar" type="submit" class="btn btn-primary">Salvar</button>
+                                <button id="salvar" type="button" class="btn btn-primary"
+                                    onclick="button_publish_ajax()">Salvar</button>
                             </div>
                         </div>
                     </form>
@@ -76,6 +77,8 @@
         </div>
     </div>
     <script>
+        var xhttp = new XMLHttpRequest();
+
         document.getElementById('nomeDispositivo').disabled = true;
         document.getElementById('salvar').disabled = true;
         setTimeout(() => {
@@ -91,6 +94,31 @@
             xhttp.open("GET", "/dispositivo/state", true);
             xhttp.send();
         }, 1000);
+
+        function button_publish_ajax() {
+            document.getElementById('nomeDispositivo').disabled = true;
+            document.getElementById('salvar').disabled = true;
+            var form = document.getElementById("formDevice");
+            var form_data = new FormData(form);
+            var valorForm = document.getElementById('nomeDispositivo').value;
+            form_data.append('nomeDispositivo', valorForm);
+            var action = form.getAttribute("action");
+            setTimeout(() => {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', action, true);
+                xhr.overrideMimeType('text/plain; charset=UTF-8');
+                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var result = xhr.responseText;
+                        document.getElementById('nomeDispositivo').value = result + " :: TESTE!";
+                        document.getElementById('nomeDispositivo').disabled = false;
+                        document.getElementById('salvar').disabled = false;
+                    }
+                };
+                xhr.send(form_data);
+            }, 1000);
+        }
     </script>
 </body>
 

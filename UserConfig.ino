@@ -7,9 +7,10 @@ void initUserConfig()
     {
         clearEEPROM();
     }
+    saveUserConfig("", "", "", 0, true);
 }
 
-void saveUserConfig(char *_ssid, char *_password, char *_dispositivo, byte _modo, bool _modoAP)
+void saveUserConfig(const char *_ssid, const char *_password, const char *_dispositivo, byte _modo, bool _modoAP)
 {
     userConfig.id = UserId;
     strcpy(userConfig.ssid, _ssid);
@@ -30,7 +31,7 @@ void saveModoAP(bool _modo)
         _modo);
 }
 
-void saveWifiConfig(char *_ssid, char *_pass)
+void saveWifiConfig(const char *_ssid, const char *_pass)
 {
     saveUserConfig(
         _ssid,
@@ -40,7 +41,7 @@ void saveWifiConfig(char *_ssid, char *_pass)
         userConfig.modoAP);
 }
 
-void saveDevice(char *_device)
+void saveDevice(const char *_device)
 {
     saveUserConfig(
         userConfig.ssid,
@@ -60,17 +61,17 @@ void saveModoOperacao(byte _modo)
         userConfig.modoAP);
 }
 
-char *getWifiSsid()
+const char *getWifiSsid()
 {
     return userConfig.ssid;
 }
 
-char *getWifiPassword()
+const char *getWifiPassword()
 {
     return userConfig.password;
 }
 
-char *getDispositivo()
+const char *getDispositivo()
 {
     return userConfig.dispositivo;
 }
