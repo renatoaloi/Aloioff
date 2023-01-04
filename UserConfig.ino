@@ -6,8 +6,8 @@ void initUserConfig()
     if (userConfig.id != UserId)
     {
         clearEEPROM();
+        saveUserConfig("", "", "", 0, true);
     }
-    saveUserConfig("", "", "", 0, true);
 }
 
 void saveUserConfig(const char *_ssid, const char *_password, const char *_dispositivo, byte _modo, bool _modoAP)
