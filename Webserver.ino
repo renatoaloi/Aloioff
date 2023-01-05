@@ -101,8 +101,8 @@ void handleWifiConfig()
 void handleWifiState()
 {
     char buf[41];
-    const char *first = GetWifiSsid();
-    const char *second = GetWifiPassword();
+    const char *first = getWifiSsid();
+    const char *second = getWifiPassword();
     strcpy(buf, first);
     strcat(buf, "|");
     strcat(buf, second);

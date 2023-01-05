@@ -23,7 +23,7 @@ void WaitForConnection()
         delay(100);
     }
     if (DEBUG)
-        Serial.print("STA Connection established!")
+        Serial.print("STA Connection established!");
 }
 
 void initWifiModoSTA()
