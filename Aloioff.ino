@@ -18,6 +18,7 @@
 #define DEBUG 0
 #define DEBUG_REMOTO 0
 #define EEPROM_SIZE 128
+#define WIFI_STA_TIMEOUT 10000
 
 const char *ssid = APSSID;
 const char *password = APPSK;
@@ -59,23 +60,28 @@ void setup()
   if (getModoAP())
   {
     // Modo AP
-    ligarWebServerModoAP();
+    ligarModoAP();
   }
   else
   {
     // Modo de operacao STATION
-    // depois que modo AP for configurado
-    if (getModoOperacao() == 1)
+    ligarModoSTA();
+
+    if (!IsWiFiNotConnected())
     {
-      // initAlexa();
-    }
-    else if (getModoOperacao() == 2)
-    {
-      // initSmartphone();
-    }
-    else
-    {
-      // Not implemented
+      // depois que modo STA for configurado
+      if (getModoOperacao() == 1)
+      {
+        // initAlexa();
+      }
+      else if (getModoOperacao() == 2)
+      {
+        initSmartphone();
+      }
+      else
+      {
+        // Not implemented
+      }
     }
   }
 }

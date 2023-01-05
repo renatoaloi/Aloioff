@@ -1,11 +1,11 @@
-void ligarWebServerModoAP()
+void ligarModoAP()
 {
     initWifiModoAP();
     initFS();
-    initWebServerModoAP();
+    initWebServerModoConfig();
 }
 
-void desligarWebServerModoAP()
+void desligarModoAP()
 {
     endFS();
 }

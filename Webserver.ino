@@ -1,10 +1,48 @@
-void initWebServerModoAP()
+void handleWebServer()
+{
+    if (getModoAP() || getModoOperacao() == 2)
+        server.handleClient();
+}
+
+void initWebServerModoRuntime()
 {
     server.begin();
     if (DEBUG)
-        Serial.println("Servidor iniciado!");
+        Serial.println("Servidor Web no modo Runtime iniciado!");
 
-    server.on("/test", handleTest);
+    server.on("/", handleAcionamentoManual);
+    server.on("/relay", handleRelay);
+    server.onNotFound(handleFileSystem);
+}
+
+void handleAcionamentoManual()
+{
+    server.sendHeader("Location", String("/manual.html"), true);
+    server.send(302, "text/plain", "");
+}
+
+void handleRelay()
+{
+    const char *status = server.arg(0).c_str();
+    if ((strcmp(status, "1") == 0))
+    {
+        turnOffRelay();
+    }
+    else
+    {
+        turnOnRelay();
+    }
+
+    server.sendHeader("Location", String("/manual.html"), true);
+    server.send(302, "text/plain", "");
+}
+
+void initWebServerModoConfig()
+{
+    server.begin();
+    if (DEBUG)
+        Serial.println("Servidor Web no modo AP iniciado!");
+
     server.on("/dispositivo", handleDevice);
     server.on("/dispositivo/state", handleDeviceState);
     server.on("/modo", handleModoOperacao);
@@ -14,12 +52,6 @@ void initWebServerModoAP()
     server.on("/relay", handleRelay);
     server.on("/reset", handleReset);
     server.onNotFound(handleFileSystem);
-}
-
-void handleWebServer()
-{
-    if (getModoAP() || getModoOperacao() == 1)
-        server.handleClient();
 }
 
 void handleDevice()
@@ -33,14 +65,56 @@ void handleDeviceState()
     server.send(200, "text/plain", getDispositivo());
 }
 
-void handleTest() {}
+void handleModoOperacao()
+{
+    const char *_retstr = server.arg(0).c_str();
+    byte _ret;
+    if (_retstr[0] == '1')
+    {
+        _ret = 1;
+    }
+    else
+    {
+        _ret = 2;
+    }
+    saveModoOperacao(_ret);
+    handleModoOperacaoState();
+}
 
-void handleModoOperacao() {}
-void handleModoOperacaoState() {}
-void handleWifiConfig() {}
-void handleWifiState() {}
-void handleRelay() {}
-void handleReset() {}
+void handleModoOperacaoState()
+{
+    byte _ret = getModoOperacao();
+    if (_ret == 1)
+        server.send(200, "text/plain", "1");
+    else if (_ret == 2)
+        server.send(200, "text/plain", "2");
+    else
+        server.send(200, "text/plain", "0");
+}
+
+void handleWifiConfig()
+{
+    saveWifiConfig(server.arg(0).c_str(), server.arg(1).c_str());
+    handleWifiState();
+}
+
+void handleWifiState()
+{
+    char buf[41];
+    const char *first = GetWifiSsid();
+    const char *second = GetWifiPassword();
+    strcpy(buf, first);
+    strcat(buf, "|");
+    strcat(buf, second);
+    server.send(200, "text/plain", buf);
+}
+
+void handleReset()
+{
+    saveModoAP(false);
+    delay(100);
+    ESP.restart();
+}
 
 void handleFileSystem()
 {

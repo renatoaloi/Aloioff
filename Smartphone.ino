@@ -1,0 +1,5 @@
+void initSmartphone()
+{
+    initRelay();
+    initWebServerModoRuntime();
+}
