@@ -4,11 +4,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ALOITECH - Modo de Operação do Dispositivo Aloioff</title>
+    <title>ALOITECH - Domínio do Aloioff</title>
     <link rel="stylesheet" href="css/site.css" />
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <script src="js/site.js?v=2"></script>
-    <script src="js/modo.js?v=1"></script>
+    <script src="js/dominio.js?v=1"></script>
 </head>
 
 <body>
@@ -24,16 +24,16 @@
                 <a href="index.html" class="dashboard-nav-item">
                     Home
                 </a>
-                <a href="dominio.html" class="dashboard-nav-item">
+                <a href="#" class="dashboard-nav-item active">
                     Domínio
                 </a>
-                <a href="#" class="dashboard-nav-item">
+                <a href="config.html" class="dashboard-nav-item">
                     Dispositivo
                 </a>
                 <a href="wifi.html" class="dashboard-nav-item">
                     Wi-Fi
                 </a>
-                <a href="modo.html" class="dashboard-nav-item active">
+                <a href="modo.html" class="dashboard-nav-item">
                     Modo de Operação
                 </a>
                 <a href="reset.html" class="dashboard-nav-item">
@@ -47,29 +47,29 @@
             </header>
             <div class="dashboard-content">
                 <div class="container">
-                    <form id="formModo" method="GET" action="/modo" onsubmit="return false;">
+                    <form id="formDomain" method="GET" action="/dominio" onsubmit="return false;">
                         <div class="card">
                             <div class="card-header">
-                                <h2>Modo de Operação</h2>
+                                <h2>Domínio do Dispositivo Aloioff</h2>
                                 <span id="msg"></span>
                             </div>
                             <div class="card-body">
+
                                 <div class="form-group">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="modo" id="modoAlexa"
-                                            value="1">
-                                        <label class="form-check-label" for="modoAlexa">
-                                            Acionamento por voz pela Alexa
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="modo" id="modoSmartphone"
-                                            value="2">
-                                        <label class="form-check-label" for="modoSmartphone">
-                                            Acionamento por Smartphone
-                                        </label>
-                                    </div>
+                                    <label for="dominioDispositivo">Qual o domínio do seu dispositivo?</label>
+                                    <input type="text" class="form-control" id="dominioDispositivo" name="nomeDispositivo"
+                                        aria-describedby="dominioHelp" placeholder="Digite o domínio">
+
+                                    <small id="dominioHelp" class="form-text text-muted">Este nome de domínio será usado para
+                                        acessar o dispositivo.
+                                        <div>
+                                            <i>Exemplo</i>: http://aloioff.local (onde
+                                            <strong>aloioff</strong> é o nome do
+                                            domínio desejado)
+                                        </div>
+                                    </small>
                                 </div>
+
                             </div>
                             <div class="card-footer">
                                 <button id="salvar" type="button" class="btn btn-primary"

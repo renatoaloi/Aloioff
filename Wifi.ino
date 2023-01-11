@@ -31,4 +31,5 @@ void initWifiModoSTA()
     WiFi.mode(WIFI_STA);
     WiFi.begin(getWifiSsid(), getWifiPassword());
     WaitForConnection();
+    MDNS.begin(getDominio());
 }

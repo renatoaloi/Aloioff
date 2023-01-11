@@ -6,16 +6,17 @@ void initUserConfig()
     if (userConfig.id != UserId)
     {
         clearEEPROM();
-        saveUserConfig("", "", "", 0, true);
+        saveUserConfig("", "", "", "", 0, true);
     }
 }
 
-void saveUserConfig(const char *_ssid, const char *_password, const char *_dispositivo, byte _modo, bool _modoAP)
+void saveUserConfig(const char *_ssid, const char *_password, const char *_dispositivo, const char *_dominio, byte _modo, bool _modoAP)
 {
     userConfig.id = UserId;
     strcpy(userConfig.ssid, _ssid);
     strcpy(userConfig.password, _password);
     strcpy(userConfig.dispositivo, _dispositivo);
+    strcpy(userConfig.dominio, _dominio);
     userConfig.modoOperacao = _modo;
     userConfig.modoAP = _modoAP;
     commitEEPROM(eeAddress);
@@ -27,6 +28,7 @@ void saveModoAP(bool _modo)
         userConfig.ssid,
         userConfig.password,
         userConfig.dispositivo,
+        userConfig.dominio,
         userConfig.modoOperacao,
         _modo);
 }
@@ -37,6 +39,7 @@ void saveWifiConfig(const char *_ssid, const char *_pass)
         _ssid,
         _pass,
         userConfig.dispositivo,
+        userConfig.dominio,
         userConfig.modoOperacao,
         userConfig.modoAP);
 }
@@ -47,6 +50,18 @@ void saveDevice(const char *_device)
         userConfig.ssid,
         userConfig.password,
         _device,
+        userConfig.dominio,
+        userConfig.modoOperacao,
+        userConfig.modoAP);
+}
+
+void saveDomain(const char *_domain)
+{
+    saveUserConfig(
+        userConfig.ssid,
+        userConfig.password,
+        userConfig.dispositivo,
+        _domain,
         userConfig.modoOperacao,
         userConfig.modoAP);
 }
@@ -57,6 +72,7 @@ void saveModoOperacao(byte _modo)
         userConfig.ssid,
         userConfig.password,
         userConfig.dispositivo,
+        userConfig.dominio,
         _modo,
         userConfig.modoAP);
 }
@@ -74,6 +90,11 @@ const char *getWifiPassword()
 const char *getDispositivo()
 {
     return userConfig.dispositivo;
+}
+
+const char *getDominio()
+{
+    return userConfig.dominio;
 }
 
 byte getModoOperacao()
@@ -99,6 +120,8 @@ void getUserConfig()
         Serial.println(userConfig.password);
         Serial.print("dispositivo: ");
         Serial.println(userConfig.dispositivo);
+        Serial.print("dominio: ");
+        Serial.println(userConfig.dominio);
         Serial.print("Modo AP ");
         Serial.println(userConfig.modoAP ? "ligado!" : "desligado!");
         Serial.print("Modo de Operacao ");

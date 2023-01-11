@@ -38,13 +38,14 @@ struct UserConfig
   char ssid[20];
   char password[20];
   char dispositivo[20];
+  char dominio[20];
   bool modoAP;
   byte modoOperacao;
 };
 
 unsigned long tempoOpenedFile = 0L;
 static bool openedFile = false;
-int UserId = 91288;
+int UserId = 91292;
 int eeAddress = 0;
 static struct UserConfig userConfig;
 

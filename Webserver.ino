@@ -45,6 +45,8 @@ void initWebServerModoConfig()
 
     server.on("/dispositivo", handleDevice);
     server.on("/dispositivo/state", handleDeviceState);
+    server.on("/dominio", handleDomain);
+    server.on("/dominio/state", handleDomainState);
     server.on("/modo", handleModoOperacao);
     server.on("/modo/state", handleModoOperacaoState);
     server.on("/wifi/config", handleWifiConfig);
@@ -63,6 +65,17 @@ void handleDevice()
 void handleDeviceState()
 {
     server.send(200, "text/plain", getDispositivo());
+}
+
+void handleDomain()
+{
+    saveDomain(server.arg(0).c_str());
+    handleDomainState();
+}
+
+void handleDomainState()
+{
+    server.send(200, "text/plain", getDominio());
 }
 
 void handleModoOperacao()
