@@ -7,5 +7,6 @@ void ligarModoAP()
 
 void desligarModoAP()
 {
+    saveModoAP(false);
     endFS();
 }

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/site.css" />
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <script src="js/site.js"></script>
+    <script src="js/reset.js"></script>
 </head>
 
 <body>
@@ -48,14 +49,15 @@
                 <div class="container">
                     <div class="card">
                         <div class="card-header">
-                            <h2>Reiniciar Dispositivo Alexa Relê</h2>
+                            <h2>Reiniciar Dispositivo Aloioff</h2>
+                            <span id="msg"></span>
                         </div>
                         <div class="card-body">
                             <p>Clique no botão abaixo para confirmar a ação!</p>
                         </div>
                         <div class="card-footer">
-                            <form id="formNome" method="GET" action="/reset">
-                                <button type="submit" class="btn btn-danger">Reiniciar</button>
+                            <form id="formReset" method="GET" action="/reset" onsubmit="return false;">
+                                <button type="button" class="btn btn-danger" onclick="sendReset()">Reiniciar</button>
                             </form>
                         </div>
                     </div>

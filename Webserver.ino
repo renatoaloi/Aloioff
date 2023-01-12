@@ -32,9 +32,7 @@ void handleRelay()
     {
         turnOnRelay();
     }
-
-    server.sendHeader("Location", String("/manual.html"), true);
-    server.send(302, "text/plain", "");
+    server.send(200, "text/plain", "");
 }
 
 void initWebServerModoConfig()
@@ -43,6 +41,7 @@ void initWebServerModoConfig()
     if (DEBUG)
         Serial.println("Servidor Web no modo AP iniciado!");
 
+    server.on("/", handleIndex);
     server.on("/dispositivo", handleDevice);
     server.on("/dispositivo/state", handleDeviceState);
     server.on("/dominio", handleDomain);
@@ -54,6 +53,12 @@ void initWebServerModoConfig()
     server.on("/relay", handleRelay);
     server.on("/reset", handleReset);
     server.onNotFound(handleFileSystem);
+}
+
+void handleIndex()
+{
+    server.sendHeader("Location", String("/index.html"), true);
+    server.send(302, "text/plain", "");
 }
 
 void handleDevice()
@@ -124,7 +129,7 @@ void handleWifiState()
 
 void handleReset()
 {
-    saveModoAP(false);
+    desligarModoAP();
     delay(100);
     ESP.restart();
 }
