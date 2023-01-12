@@ -22,8 +22,19 @@ void WaitForConnection()
     {
         delay(100);
     }
-    if (DEBUG)
-        Serial.print("STA Connection established!");
+    if (DEBUG) {
+        if (IsWiFiNotConnected()) {
+            Serial.println("Erro ao conectar no WiFi!");
+        }
+        else {
+            Serial.println("STA Connection established!");
+            Serial.println("");
+            Serial.print("Connected to ");
+            Serial.println(getWifiSsid());
+            Serial.print("IP address: ");
+            Serial.println(WiFi.localIP());
+        }
+    }
 }
 
 void initWifiModoSTA()
@@ -31,5 +42,12 @@ void initWifiModoSTA()
     WiFi.mode(WIFI_STA);
     WiFi.begin(getWifiSsid(), getWifiPassword());
     WaitForConnection();
-    MDNS.begin(getDominio());
+    if (!IsWiFiNotConnected()) {
+        bool isMDNSOk = MDNS.begin(getDominio());
+        if (DEBUG) {
+            if (!isMDNSOk) Serial.println("Erro ao iniciar DNS!");
+            else Serial.println("DNS iniciado com sucesso!");
+        }
+    }
+    
 }

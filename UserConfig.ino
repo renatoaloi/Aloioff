@@ -109,7 +109,9 @@ bool getModoAP()
 
 void getUserConfig()
 {
+    if (DEBUG) Serial.println("Carregando configuracoes de usuario...");
     getEEPROM(eeAddress);
+    if (DEBUG) Serial.println("Configuracoes de usuario carregadas com sucesso!");
     if (DEBUG)
     {
         Serial.print("id: ");
