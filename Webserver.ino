@@ -1,7 +1,6 @@
 void handleWebServer()
 {
-    if (getModoAP() || getModoOperacao() == 2)
-        server.handleClient();
+    server.handleClient();
 }
 
 void initWebServerModoRuntime()
@@ -144,20 +143,23 @@ void handleFileSystem()
     }
     if (pathExists(path))
     {
-        tempoOpenedFile = millis() + 5000;
-        while (openedFile && millis() < tempoOpenedFile)
-        {
-            delay(10);
-        };
-        if (millis() > tempoOpenedFile)
-        {
-            server.send(500, "text/plain", "Tempo expirado tentando abrir arquivo!");
-        }
+        // tempoOpenedFile = millis() + 5000;
+        // while (openedFile && millis() < tempoOpenedFile)
+        // {
+        //     delay(10);
+        // };
+        // if (millis() > tempoOpenedFile)
+        // {
+        //     server.send(200, "text/plain", "Tempo expirado tentando abrir arquivo!");
+        // }
+        // else
+        // {
+        File file = openFile(path);
+        if (!file)
+            server.send(200, "text/plain", "Erro ao abrir arquivo!");
         else
-        {
-            File file = openFile(path);
             server.streamFile(file, contentType);
-            closeFile(file);
-        }
+        closeFile(file);
+        //}
     }
 }

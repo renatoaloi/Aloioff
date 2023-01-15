@@ -2,7 +2,7 @@
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
-#include <SPI.h> 
+#include <SPI.h>
 #include <FS.h>
 #include <LittleFS.h>
 #include <EEPROM.h>
@@ -15,7 +15,7 @@
 
 #define RELE 0
 #define BUTTON 3
-#define DEBUG 0
+#define DEBUG 1
 #define DEBUG_REMOTO 0
 #define EEPROM_SIZE 128
 #define WIFI_STA_TIMEOUT 10000
@@ -45,7 +45,7 @@ struct UserConfig
 
 unsigned long tempoOpenedFile = 0L;
 static bool openedFile = false;
-int UserId = 91293;
+int UserId = 91297;
 int eeAddress = 0;
 static struct UserConfig userConfig;
 
@@ -53,7 +53,8 @@ static const char TEXT_PLAIN[] PROGMEM = "text/plain";
 
 void setup()
 {
-  if (DEBUG) {
+  if (DEBUG)
+  {
     Serial.begin(115200);
     delay(500);
   }
@@ -75,7 +76,7 @@ void setup()
       // depois que modo STA for configurado
       if (getModoOperacao() == 1)
       {
-        // initAlexa();
+        initAlexa();
       }
       else if (getModoOperacao() == 2)
       {
@@ -83,10 +84,11 @@ void setup()
       }
       else
       {
-        // Not implemented
+        // Futuramente OK Google
       }
-    } 
-    else {
+    }
+    else
+    {
       desligarModoSTA();
     }
   }
@@ -94,5 +96,8 @@ void setup()
 
 void loop()
 {
-  handleWebServer();
+  if (getModoAP() || getModoOperacao() == 2)
+    handleWebServer();
+  if (!getModoAP() && getModoOperacao() == 1)
+    alexaHandle();
 }
