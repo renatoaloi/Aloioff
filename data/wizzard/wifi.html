@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ALOIOFF - A Tomada Inteligente para todas dominar!</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <script src="../js/wizzard.js"></script>
+  </head>
+
+  <body class="text-bg-dark">
+    <div class="container">
+      <div class="row m-4">
+        <div class="col-2">
+          <a href="#" class="btn btn-lg btn-secondary" onclick="history.back()">
+            &nbsp;&lt;&nbsp;
+          </a>
+        </div>
+        <div class="col-9 text-center text-success">
+          <h2>WiFi Config</h2>
+        </div>
+        <div class="col-1"></div>
+      </div>
+      <div>
+        <div class="text-secondary">
+          Agora vamos configurar o seu Roteador WiFi:
+        </div>
+        <div class="form-group m-4">
+          <div class="mb-3">
+            <label for="mqttServer" class="form-label form-control-lg">
+              SSID
+            </label>
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="mqttServer"
+              aria-describedby="mqttServerHelp"
+              placeholder="Ex: AloiTech"
+            />
+            <div id="mqttServerHelp" class="form-text">
+              SSID da sua rede Wi-Fi.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="mqttPassword" class="form-label form-control-lg">
+              Wi-Fi Password
+            </label>
+            <input
+              type="password"
+              class="form-control form-control-lg"
+              id="mqttPassword"
+              aria-describedby="mqttPasswordHelp"
+            />
+            <div id="mqttPasswordHelp" class="form-text">Senha do Wi-Fi.</div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 mb-3">
+        <input
+          type="button"
+          class="btn btn-success btn-lg"
+          value="A V A N Ç A R >>"
+          onclick="location.href='reset.html';"
+          style="width: 100%"
+        />
+      </div>
+    </div>
+  </body>
+</html>

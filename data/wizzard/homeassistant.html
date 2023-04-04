@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ALOIOFF - A Tomada Inteligente para todas dominar!</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <script src="../js/wizzard.js"></script>
+  </head>
+
+  <body class="text-bg-dark">
+    <div class="container">
+      <div class="row m-4">
+        <div class="col-2">
+          <a href="#" class="btn btn-lg btn-secondary" onclick="history.back()">
+            &nbsp;&lt;&nbsp;
+          </a>
+        </div>
+        <div class="col-9 text-center text-success">
+          <h2>Home Assistant (MQTT)</h2>
+        </div>
+        <div class="col-1"></div>
+      </div>
+      <div>
+        <h3>Configuração dos Tópicos</h3>
+        <div class="text-secondary">Configure os campos abaixo:</div>
+        <div class="form-group m-4">
+          <div class="mb-3">
+            <label for="configTopic" class="form-label form-control-lg">
+              Tópico de configuração
+            </label>
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="configTopic"
+              aria-describedby="configTopicHelp"
+              placeholder="Ex: homeassistant/switch/aloioff/tomada1/config"
+            />
+            <div id="configTopicHelp" class="form-text">
+              Tópico de configuração que será automaticamente detectado pelo
+              HomeAssistant!
+              <div>
+                <i>Exemplo</i>:
+                <pre>homeassistant/switch/aloioff/tomada1/config</pre>
+              </div>
+              <strong>Atenção!</strong>
+              Deve necessariamente terminar com
+              <pre>/config</pre>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="commandTopic" class="form-label form-control-lg">
+              Tópico de comando
+            </label>
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="commandTopic"
+              aria-describedby="commandTopicHelp"
+              placeholder="Ex: aloioff/tomada1/command"
+            />
+            <div id="commandTopicHelp" class="form-text">
+              Tópico de comando da tomada.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="statusTopic" class="form-label form-control-lg">
+              Tópico de Status
+            </label>
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="statusTopic"
+              aria-describedby="statusTopicHelp"
+              placeholder="Ex: aloioff/tomada1/status"
+            />
+            <div id="statusTopicHelp" class="form-text">
+              Tópico de status da tomada.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="uniqueId" class="form-label form-control-lg">
+              Unique ID
+            </label>
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="uniqueId"
+              aria-describedby="uniqueIdHelp"
+            />
+            <div id="uniqueIdHelp" class="form-text">
+              Chave única identificadora do dispositivo.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="deviceClass" class="form-label form-control-lg">
+              Device Class
+            </label>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              id="deviceClass"
+            >
+              <option value="binary_sensor">Binary Sensor</option>
+              <option value="button">Button</option>
+              <option value="cover">Cover</option>
+              <option value="humidifier">Humidifier</option>
+              <option value="media_player">Media Player</option>
+              <option value="number">Number</option>
+              <option value="sensor">Sensor</option>
+              <option value="switch" selected>Switch</option>
+            </select>
+            <div id="deviceClassHelp" class="form-text">
+              Tipo de dispositivo.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="payloadOn" class="form-label form-control-lg">
+              Payload ON
+            </label>
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="payloadOn"
+              aria-describedby="payloadOnHelp"
+              placeholder="Ex: ON"
+            />
+            <div id="payloadOnHelp" class="form-text">
+              Payload para ligar o dispositivo.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="payloadOff" class="form-label form-control-lg">
+              Payload OFF
+            </label>
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="payloadOff"
+              aria-describedby="payloadOffHelp"
+              placeholder="Ex: OFF"
+            />
+            <div id="payloadOffHelp" class="form-text">
+              Payload para desligar o dispositivo.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 mb-3">
+        <input
+          type="button"
+          class="btn btn-success btn-lg"
+          value="A V A N Ç A R >>"
+          onclick="location.href='wifi.html';"
+          style="width: 100%"
+        />
+      </div>
+    </div>
+  </body>
+</html>

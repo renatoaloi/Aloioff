@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ALOIOFF - A Tomada Inteligente para todas dominar!</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <script src="../js/wizzard.js"></script>
+  </head>
+
+  <body class="text-bg-dark">
+    <div class="container">
+      <div class="row m-4">
+        <div class="col-2">
+          <a href="#" class="btn btn-lg btn-secondary" onclick="history.back()">
+            &nbsp;&lt;&nbsp;
+          </a>
+        </div>
+        <div class="col-9 text-center text-success">
+          <h2>Configure seu dispositivo</h2>
+        </div>
+        <div class="col-1"></div>
+      </div>
+      <div>
+        <div class="text-secondary">
+          Escolha a opção de configuração desejada:
+        </div>
+        <div class="m-4">
+          <div class="mt-2">
+            <input
+              class="form-control-lg form-check-input"
+              type="radio"
+              name="deviceType"
+              id="deviceType1"
+              value="1"
+              style="
+                padding: 1.5rem 1.5rem;
+                margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+              "
+            />
+            <label
+              class="form-control-lg form-check-label mt-3 p-1"
+              for="deviceType1"
+            >
+              Echo Dot (Alexa)
+            </label>
+          </div>
+          <div class="mt-2">
+            <input
+              class="form-control-lg form-check-input"
+              type="radio"
+              name="deviceType"
+              id="deviceType2"
+              value="2"
+              style="
+                padding: 1.5rem 1.5rem;
+                margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+              "
+            />
+            <label
+              class="form-control-lg form-check-label mt-3 p-1"
+              for="deviceType2"
+            >
+              Google Home (Ok Google)
+            </label>
+          </div>
+          <div class="mt-2">
+            <input
+              class="form-control-lg form-check-input"
+              type="radio"
+              name="deviceType"
+              id="deviceType3"
+              style="
+                padding: 1.5rem 1.5rem;
+                margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+              "
+              value="3"
+            />
+            <label
+              class="form-control-lg form-check-label mt-3 p-1"
+              for="deviceType3"
+            >
+              Home Assistant (MQTT)
+            </label>
+          </div>
+          <div class="mt-2">
+            <input
+              class="form-control-lg form-check-input"
+              type="radio"
+              name="deviceType"
+              id="deviceType4"
+              value="4"
+              style="
+                padding: 1.5rem 1.5rem;
+                margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+              "
+            />
+            <label
+              class="form-control-lg form-check-label mt-3 p-1"
+              for="deviceType4"
+            >
+              Node-Red (MQTT)
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 mb-3">
+        <input
+          type="button"
+          class="btn btn-success btn-lg"
+          value="A V A N Ç A R >>"
+          onclick="selectDeviceType([...document.getElementsByName('deviceType')].find(f => f.checked).value)"
+          style="width: 100%"
+        />
+      </div>
+    </div>
+  </body>
+</html>
