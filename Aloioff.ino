@@ -7,10 +7,11 @@
 #include <LittleFS.h>
 #include <EEPROM.h>
 #include "fauxmoESP.h"
+#include <DNSServer.h>
 
 #ifndef APSSID
 #define APSSID "ALOIOFF"
-#define APPSK "12345678"
+#define APPSK ""
 #endif
 
 #define RELE 0
@@ -20,6 +21,7 @@
 #define EEPROM_SIZE 128
 #define WIFI_STA_TIMEOUT 10000
 
+const byte DNS_PORT = 53;
 const char *ssid = APSSID;
 const char *password = APPSK;
 const char *host = "aloioff";
@@ -29,7 +31,7 @@ IPAddress gateway(10, 0, 0, 1);
 IPAddress subnet(255, 255, 255, 0);
 
 ESP8266WebServer server(80);
-
+DNSServer dnsServer;
 fauxmoESP fauxmo;
 
 struct UserConfig
@@ -45,7 +47,7 @@ struct UserConfig
 
 unsigned long tempoOpenedFile = 0L;
 static bool openedFile = false;
-int UserId = 91298;
+int UserId = 91299;
 int eeAddress = 0;
 static struct UserConfig userConfig;
 
@@ -96,8 +98,10 @@ void setup()
 
 void loop()
 {
-  if (getModoAP() || getModoOperacao() == 2)
+  if (getModoAP() || getModoOperacao() == 2) {
+    if (getModoAP()) dnsServer.processNextRequest();
     handleWebServer();
+  }
   if (!getModoAP() && getModoOperacao() == 1)
     alexaHandle();
 }

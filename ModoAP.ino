@@ -1,7 +1,12 @@
 void ligarModoAP()
 {
     initWifiModoAP();
-    initFS();
+    if (initFS()) {
+      if (DEBUG) Serial.println("FS iniciado com sucesso!");
+    }
+    else {
+      if (DEBUG) Serial.println("Erro ao iniciar FS!");
+    }
     initWebServerModoConfig();
 }
 

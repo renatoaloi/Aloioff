@@ -1,5 +1,6 @@
 void initWifiModoAP()
 {
+    WiFi.mode(WIFI_AP);
     WiFi.softAPConfig(local_IP, gateway, subnet);
     WiFi.softAP(ssid, password);
     IPAddress myIP = WiFi.softAPIP();
@@ -8,6 +9,7 @@ void initWifiModoAP()
         Serial.print("AP IP address: ");
         Serial.println(myIP);
     }
+    dnsServer.start(DNS_PORT, "*", local_IP);
 }
 
 bool IsWiFiNotConnected()

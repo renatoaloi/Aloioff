@@ -34,6 +34,13 @@ void handleRelay()
     server.send(200, "text/plain", "");
 }
 
+String responseHTML = ""
+                      "<!DOCTYPE html><html lang='en'><head>"
+                      "<meta name='viewport' content='width=device-width'>"
+                      "<title>CaptivePortal</title></head><body>"
+                      "<h1>Hello World!</h1><p>This is a captive portal example."
+                      " All requests will be redirected here.</p></body></html>";
+
 void initWebServerModoConfig()
 {
     server.begin();
@@ -52,6 +59,9 @@ void initWebServerModoConfig()
     server.on("/relay", handleRelay);
     server.on("/reset", handleReset);
     server.onNotFound(handleFileSystem);
+    //server.onNotFound([]() {
+    //  server.send(200, "text/html", responseHTML);
+    //});
 }
 
 void handleIndex()
@@ -137,12 +147,25 @@ void handleFileSystem()
 {
     String path = ESP8266WebServer::urlDecode(server.uri());
     String contentType = mime::getContentType(path);
-    if (path.endsWith("/"))
-    {
-        path += "index.html";
+    if (DEBUG) {
+      Serial.println(path);
+      Serial.println(contentType);
     }
+    if (path.endsWith("/") || path.endsWith("/gen_204") || path.endsWith("/generate_204"))
+    {
+        if (DEBUG) {
+          Serial.println("redirecting to index");
+        }
+        path = "/index.html";
+        contentType = "text/html";
+    }
+
     if (pathExists(path))
     {
+        if (DEBUG) {
+          Serial.print("path exists: ");
+          Serial.println(path);
+        }
         // tempoOpenedFile = millis() + 5000;
         // while (openedFile && millis() < tempoOpenedFile)
         // {
