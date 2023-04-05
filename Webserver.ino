@@ -72,12 +72,16 @@ void handleIndex()
 
 void handleDevice()
 {
+  if (DEBUG) Serial.print("Handle Device: ");
+  if (DEBUG) Serial.println(server.arg(0).c_str());
     saveDevice(server.arg(0).c_str());
     handleDeviceState();
 }
 
 void handleDeviceState()
 {
+  if (DEBUG) Serial.print("Handle Device State: ");
+  if (DEBUG) Serial.println(getDispositivo());
     server.send(200, "text/plain", getDispositivo());
 }
 
@@ -151,7 +155,7 @@ void handleFileSystem()
       Serial.println(path);
       Serial.println(contentType);
     }
-    if (path.endsWith("/") || path.endsWith("/gen_204") || path.endsWith("/generate_204"))
+    if (!pathExists(path))
     {
         if (DEBUG) {
           Serial.println("redirecting to index");
@@ -166,23 +170,14 @@ void handleFileSystem()
           Serial.print("path exists: ");
           Serial.println(path);
         }
-        // tempoOpenedFile = millis() + 5000;
-        // while (openedFile && millis() < tempoOpenedFile)
-        // {
-        //     delay(10);
-        // };
-        // if (millis() > tempoOpenedFile)
-        // {
-        //     server.send(200, "text/plain", "Tempo expirado tentando abrir arquivo!");
-        // }
-        // else
-        // {
         File file = openFile(path);
-        if (!file)
+        if (!file) {
+            if (DEBUG) Serial.print("Erro ao abrir arquivo: ");
+            if (DEBUG) Serial.println(path);
             server.send(200, "text/plain", "Erro ao abrir arquivo!");
+        }
         else
             server.streamFile(file, contentType);
         closeFile(file);
-        //}
     }
 }

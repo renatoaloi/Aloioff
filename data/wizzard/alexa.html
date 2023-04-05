@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ALOIOFF - A Tomada Inteligente para todas dominar!</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
-    <script src="../js/wizzard.js"></script>
+    <script src="../js/alexa.js"></script>
   </head>
 
   <body class="text-bg-dark">
@@ -29,12 +29,12 @@
               Nome do dispositivo
             </label>
             <input
-              type="email"
+              type="text"
               class="form-control form-control-lg"
               id="deviceName"
-              aria-describedby="emailHelp"
+              aria-describedby="deviceNameHelp"
             />
-            <div id="emailHelp" class="form-text">
+            <div id="deviceNameHelp" class="form-text">
               Este nome será usado para ativar o dispositivo.
               <div>
                 <i>Exemplo</i>: "Alexa, ligue a lâmpada" (onde
@@ -47,12 +47,16 @@
       <div class="mt-4 mb-3">
         <input
           type="button"
+          id="nextButton"
           class="btn btn-success btn-lg"
           value="A V A N Ç A R >>"
-          onclick="location.href='wifi.html';"
+          onclick="saveField('deviceName', 'nextButton');"
           style="width: 100%"
         />
       </div>
     </div>
   </body>
+  <script>
+    getField("deviceName", "nextButton");
+  </script>
 </html>
