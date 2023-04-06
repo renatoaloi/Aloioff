@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ALOIOFF - A Tomada Inteligente para todas dominar!</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
-    <script src="../js/wizzard.js"></script>
+    <script src="../js/wifi.js"></script>
   </head>
 
   <body class="text-bg-dark">
@@ -27,43 +27,48 @@
         </div>
         <div class="form-group m-4">
           <div class="mb-3">
-            <label for="mqttServer" class="form-label form-control-lg">
-              SSID
+            <label for="wifiSSID" class="form-label form-control-lg">
+              Wi-Fi SSID
             </label>
             <input
               type="text"
               class="form-control form-control-lg"
-              id="mqttServer"
-              aria-describedby="mqttServerHelp"
+              id="wifiSSID"
+              aria-describedby="wifiSSIDHelp"
               placeholder="Ex: AloiTech"
             />
-            <div id="mqttServerHelp" class="form-text">
+            <div id="wifiSSIDHelp" class="form-text">
               SSID da sua rede Wi-Fi.
             </div>
           </div>
           <div class="mb-3">
-            <label for="mqttPassword" class="form-label form-control-lg">
+            <label for="wifiPassword" class="form-label form-control-lg">
               Wi-Fi Password
             </label>
             <input
               type="password"
               class="form-control form-control-lg"
-              id="mqttPassword"
-              aria-describedby="mqttPasswordHelp"
+              id="wifiPassword"
+              aria-describedby="wifiPasswordHelp"
             />
-            <div id="mqttPasswordHelp" class="form-text">Senha do Wi-Fi.</div>
+            <div id="wifiPasswordHelp" class="form-text">Senha do Wi-Fi.</div>
           </div>
         </div>
       </div>
       <div class="mt-4 mb-3">
         <input
           type="button"
+          id="nextButton"
           class="btn btn-success btn-lg"
           value="A V A N Ç A R >>"
-          onclick="location.href='reset.html';"
+          onclick="saveField('wifiSSID', 'wifiPassword', 'nextButton');"
           style="width: 100%"
         />
       </div>
     </div>
   </body>
+  <script>
+    getField("wifiSSID", "nextButton");
+    getField("wifiPassword", "nextButton");
+  </script>
 </html>

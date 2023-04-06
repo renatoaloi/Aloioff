@@ -99,6 +99,10 @@ void handleDomainState()
 void handleModoOperacao()
 {
     const char *_retstr = server.arg(0).c_str();
+
+    if (DEBUG) Serial.print("Handle Modo: ");
+    if (DEBUG) Serial.println(server.arg(0).c_str());
+    
     byte _ret;
     if (_retstr[0] == '1')
     {
@@ -125,6 +129,11 @@ void handleModoOperacaoState()
 
 void handleWifiConfig()
 {
+  if (DEBUG) Serial.print("Handle Wifi Config: ");
+  if (DEBUG) Serial.print(server.arg(0).c_str());
+  if (DEBUG) Serial.print("|");
+  if (DEBUG) Serial.print(server.arg(1).c_str());
+  if (DEBUG) Serial.println();
     saveWifiConfig(server.arg(0).c_str(), server.arg(1).c_str());
     handleWifiState();
 }
@@ -137,6 +146,9 @@ void handleWifiState()
     strcpy(buf, first);
     strcat(buf, "|");
     strcat(buf, second);
+
+    if (DEBUG) Serial.print("Handle Wifi State: ");
+    if (DEBUG) Serial.println(buf);
     server.send(200, "text/plain", buf);
 }
 

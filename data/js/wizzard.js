@@ -1,4 +1,8 @@
 function selectDeviceType(type) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("GET", "/modo?modo=" + type, true);
+  xhttp.send();
+
   if (type === "1") {
     location.href = "./alexa.html";
   } else if (type === "2") {
