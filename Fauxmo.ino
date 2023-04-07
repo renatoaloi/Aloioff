@@ -14,11 +14,11 @@ void initFauxmo()
             {
                 if (state)
                 {
-                    turnOffRelay();
+                    turnOnRelay();
                 }
                 else
                 {
-                    turnOnRelay();
+                    turnOffRelay();
                 }
             }
         });
