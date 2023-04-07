@@ -2,7 +2,7 @@ void initWifiModoAP()
 {
     WiFi.mode(WIFI_AP);
     WiFi.softAPConfig(local_IP, gateway, subnet);
-    WiFi.softAP(ssid, password);
+    WiFi.softAP(ssid);
     IPAddress myIP = WiFi.softAPIP();
     if (DEBUG)
     {
@@ -44,12 +44,4 @@ void initWifiModoSTA()
     WiFi.mode(WIFI_STA);
     WiFi.begin(getWifiSsid(), getWifiPassword());
     WaitForConnection();
-    if (!IsWiFiNotConnected()) {
-        bool isMDNSOk = MDNS.begin(getDominio());
-        if (DEBUG) {
-            if (!isMDNSOk) Serial.println("Erro ao iniciar DNS!");
-            else Serial.println("DNS iniciado com sucesso!");
-        }
-    }
-    
 }

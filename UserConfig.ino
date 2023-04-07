@@ -107,6 +107,10 @@ bool getModoAP()
     return userConfig.modoAP;
 }
 
+int getUserConfigId() {
+  return userConfig.id;
+}
+
 void getUserConfig()
 {
     if (DEBUG) Serial.println("Carregando configuracoes de usuario...");

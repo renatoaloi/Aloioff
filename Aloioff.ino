@@ -1,7 +1,6 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
-#include <ESP8266mDNS.h>
 #include <SPI.h>
 #include <FS.h>
 #include <LittleFS.h>
@@ -24,7 +23,6 @@
 const byte DNS_PORT = 53;
 const char *ssid = APSSID;
 const char *password = APPSK;
-const char *host = "aloioff";
 
 IPAddress local_IP(10, 0, 0, 1);
 IPAddress gateway(10, 0, 0, 1);
@@ -47,7 +45,7 @@ struct UserConfig
 
 unsigned long tempoOpenedFile = 0L;
 static bool openedFile = false;
-int UserId = 91300;
+int UserId = 91303;
 int eeAddress = 0;
 static struct UserConfig userConfig;
 

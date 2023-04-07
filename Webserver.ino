@@ -164,6 +164,7 @@ void handleFileSystem()
     String path = ESP8266WebServer::urlDecode(server.uri());
     String contentType = mime::getContentType(path);
     if (DEBUG) {
+      Serial.print(server.hostHeader());
       Serial.println(path);
       Serial.println(contentType);
     }

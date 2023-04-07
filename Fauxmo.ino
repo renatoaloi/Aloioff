@@ -4,7 +4,6 @@ void initFauxmo()
     fauxmo.setPort(80);
     fauxmo.enable(true);
     fauxmo.addDevice(getDispositivo());
-
     fauxmo.onSetState(
         [](unsigned char device_id, 
         const char *device_name, 
