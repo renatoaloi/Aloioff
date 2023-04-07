@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ALOIOFF - A Tomada Inteligente para todas dominar!</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <script src="../js/wizzard.js"></script>
+  </head>
+
+  <body class="text-bg-dark">
+    <div class="container">
+      <div class="row m-4">
+        <div class="col-2">
+          <a href="#" class="btn btn-lg btn-secondary" onclick="history.back()">
+            &nbsp;&lt;&nbsp;
+          </a>
+        </div>
+        <div class="col-9 text-center text-success">
+          <h2>Broker MQTT</h2>
+        </div>
+        <div class="col-1"></div>
+      </div>
+      <div>
+        <div class="text-secondary">
+          Primeiro vamos configurar o seu Broker MQTT:
+        </div>
+        <div class="form-group m-4">
+          <div class="mb-3">
+            <label for="mqttServer" class="form-label form-control-lg">
+              MQTT Server
+            </label>
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="mqttServer"
+              aria-describedby="mqttServerHelp"
+              placeholder="Ex: aloiquitto.local"
+            />
+            <div id="mqttServerHelp" class="form-text">
+              Servidor do MQTT (Mosquitto).
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="mqttServerPort" class="form-label form-control-lg">
+              MQTT Server Port
+            </label>
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="mqttServerPort"
+              aria-describedby="mqttServerPortHelp"
+              placeholder="Ex: 1883"
+            />
+            <div id="mqttServerPortHelp" class="form-text">
+              Porta do Servidor do MQTT (Mosquitto).
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="mqttUsername" class="form-label form-control-lg">
+              MQTT Username
+            </label>
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="mqttUsername"
+              aria-describedby="mqttUsernameHelp"
+            />
+            <div id="mqttUsernameHelp" class="form-text">
+              Usuário do Servidor do MQTT (Mosquitto).
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="mqttPassword" class="form-label form-control-lg">
+              MQTT Password
+            </label>
+            <input
+              type="password"
+              class="form-control form-control-lg"
+              id="mqttPassword"
+              aria-describedby="mqttPasswordHelp"
+            />
+            <div id="mqttPasswordHelp" class="form-text">
+              Senha do Servidor do MQTT (Mosquitto).
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 mb-3">
+        <input
+          type="button"
+          class="btn btn-success btn-lg"
+          value="A V A N Ç A R >>"
+          onclick="selectMqttBroker(
+            document.getElementById('mqttServer').value,
+            document.getElementById('mqttServerPort').value,
+            document.getElementById('mqttUsername').value, 
+            document.getElementById('mqttPassword').value);"
+          style="width: 100%"
+        />
+      </div>
+    </div>
+  </body>
+</html>

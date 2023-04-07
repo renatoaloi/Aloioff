@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ALOIOFF - A Tomada Inteligente para todas dominar!</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <script src="../js/reset.js"></script>
+  </head>
+
+  <body class="text-bg-dark">
+    <div class="container">
+      <div class="row m-4">
+        <div class="col-2">
+          <a href="#" class="btn btn-lg btn-secondary" onclick="history.back()">
+            &nbsp;&lt;&nbsp;
+          </a>
+        </div>
+        <div class="col-9 text-center text-success">
+          <h2>Reset Device</h2>
+        </div>
+        <div class="col-1"></div>
+      </div>
+      <div>
+        <div class="text-secondary">
+          Reinicie o dispositivo para aplicar as novas configurações, clicando
+          no botão abaixo!
+        </div>
+      </div>
+      <div class="mt-4 mb-3">
+        <input
+          type="button"
+          id="resetButton"
+          class="btn btn-danger btn-lg"
+          value="R E I N I C I A R !"
+          onclick="resetDevice('resetButton');"
+          style="width: 100%"
+        />
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,32 +1,26 @@
-bool initFS() {
-  return LittleFS.begin();
+bool initFS()
+{
+    return LittleFS.begin();
 }
 
-bool handleFileRead(String path) {
-  if (DEBUG) Serial.println(String("handleFileRead: ") + path);
+bool pathExists(String path)
+{
+    return LittleFS.exists(path);
+}
 
-  if (path.endsWith("/")) {
-    path += "index.html";
-  }
+File openFile(String path)
+{
+    // openedFile = true;
+    return LittleFS.open(path, "r");
+}
 
-  String contentType;
-  if (server.hasArg("download")) {
-    contentType = F("application/octet-stream");
-  } else {
-    contentType = mime::getContentType(path);
-  }
-
-  if (!LittleFS.exists(path)) {
-    path = path + ".gz";
-  }
-  if (LittleFS.exists(path)) {
-    File file = LittleFS.open(path, "r");
-    if (server.streamFile(file, contentType) != file.size()) {
-      if (DEBUG) Serial.println("Sent less data than expected!");
-    }
+void closeFile(File file)
+{
     file.close();
-    return true;
-  }
+    // openedFile = false;
+}
 
-  return false;
+void endFS()
+{
+    LittleFS.end();
 }
