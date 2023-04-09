@@ -102,6 +102,27 @@ byte getModoOperacao()
     return userConfig.modoOperacao;
 }
 
+const char* getNameModoOperacao()
+{
+    if (userConfig.modoOperacao == 1)
+    {
+      return "Echo Dot (Alexa)";
+    }
+    else if (userConfig.modoOperacao == 2)
+    {
+      return "Google Home (Ok Google)";
+    }
+    else if (userConfig.modoOperacao == 3)
+    {
+      return "Home Assistant (MQTT)";
+    }
+    else if (userConfig.modoOperacao == 4)
+    {
+      return "Node Red (MQTT)";
+    }
+    return "Desconhecido";
+}
+
 bool getModoAP()
 {
     return userConfig.modoAP;
