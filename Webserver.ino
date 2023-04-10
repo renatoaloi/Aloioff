@@ -56,6 +56,19 @@ void initWebServerModoConfig()
     server.on("/modo/state", handleModoOperacaoState);
     server.on("/wifi/config", handleWifiConfig);
     server.on("/wifi/state", handleWifiState);
+
+    server.on("/mqtt/server/config", handleMQTTServerConfig);
+    server.on("/mqtt/server/state", handleMQTTServerState);
+    server.on("/mqtt/port/config", handleMQTTPortConfig);
+    server.on("/mqtt/port/state", handleMQTTPortState);
+    server.on("/mqtt/username/config", handleMQTTUsernameConfig);
+    server.on("/mqtt/username/state", handleMQTTUsernameState);
+    server.on("/mqtt/password/config", handleMQTTPasswordConfig);
+    server.on("/mqtt/password/state", handleMQTTPasswordState);
+    server.on("/mqtt/feed/config", handleMQTTFeedConfig);
+    server.on("/mqtt/feed/state", handleMQTTFeedState);
+    
+    
     server.on("/relay", handleRelay);
     server.on("/reset", handleReset);
     server.onNotFound(handleFileSystem);
@@ -63,6 +76,18 @@ void initWebServerModoConfig()
     //  server.send(200, "text/html", responseHTML);
     //});
 }
+
+
+void handleMQTTServerConfig () {}
+void handleMQTTServerState () {}
+void handleMQTTPortConfig () {}
+void handleMQTTPortState () {}
+void handleMQTTUsernameConfig () {}
+void handleMQTTUsernameState () {}
+void handleMQTTPasswordConfig () {}
+void handleMQTTPasswordState () {}
+void handleMQTTFeedConfig () {}
+void handleMQTTFeedState () {}
 
 void handleIndex()
 {

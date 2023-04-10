@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ALOIOFF - A Tomada Inteligente para todas dominar!</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
-    <script src="../js/wizzard.js"></script>
+    <script src="../js/google.js"></script>
   </head>
 
   <body class="text-bg-dark">
@@ -26,55 +26,91 @@
         <div class="form-group m-4">
           <div class="mb-3">
             <label for="deviceName" class="form-label form-control-lg">
-              AIO Server
+              Nome do dispositivo
             </label>
             <input
               type="text"
               class="form-control form-control-lg"
               id="deviceName"
-              aria-describedby="emailHelp"
+              aria-describedby="deviceNameHelp"
+              placeholder="Luz do Quarto"
             />
-            <div id="emailHelp" class="form-text">Servidor da Adafruit.</div>
+            <div id="deviceNameHelp" class="form-text">
+              Nome do dispositivo.
+            </div>
           </div>
           <div class="mb-3">
-            <label for="deviceName" class="form-label form-control-lg">
-              AIO Server Port
+            <label for="feedName" class="form-label form-control-lg">
+              Adafruit Feed
             </label>
             <input
               type="text"
               class="form-control form-control-lg"
-              id="deviceName"
-              aria-describedby="emailHelp"
+              id="feedName"
+              aria-describedby="feedNameHelp"
+              placeholder="/feed/quarto"
             />
-            <div id="emailHelp" class="form-text">
+            <div id="feedNameHelp" class="form-text">
+              Lista de subscrição do MQTT da Adafruit.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="mqttServer" class="form-label form-control-lg">
+              Adafruit Server
+            </label>
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="mqttServer"
+              aria-describedby="mqttServerHelp"
+              placeholder="io.adafruit.com"
+            />
+            <div id="mqttServerHelp" class="form-text">
+              Servidor MQTT da Adafruit.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="mqttPort" class="form-label form-control-lg">
+              Adafruit Server Port
+            </label>
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="mqttPort"
+              aria-describedby="mqttPortHelp"
+              placeholder="1883"
+            />
+            <div id="mqttPortHelp" class="form-text">
               Porta do Servidor da Adafruit.
             </div>
           </div>
           <div class="mb-3">
-            <label for="deviceName" class="form-label form-control-lg">
-              AIO Username
+            <label for="mqttUsername" class="form-label form-control-lg">
+              Adafruit Username
             </label>
             <input
               type="text"
               class="form-control form-control-lg"
-              id="deviceName"
-              aria-describedby="emailHelp"
+              id="mqttUsername"
+              aria-describedby="mqttUsernameHelp"
+              placeholder="adafruit"
             />
-            <div id="emailHelp" class="form-text">
+            <div id="mqttUsernameHelp" class="form-text">
               Usuário do Servidor da Adafruit.
             </div>
           </div>
           <div class="mb-3">
-            <label for="deviceName" class="form-label form-control-lg">
-              AIO Key
+            <label for="mqttKey" class="form-label form-control-lg">
+              Adafruit Key
             </label>
             <input
               type="text"
               class="form-control form-control-lg"
-              id="deviceName"
-              aria-describedby="emailHelp"
+              id="mqttKey"
+              aria-describedby="mqttKeyHelp"
+              placeholder="cole sua key aqui"
             />
-            <div id="emailHelp" class="form-text">
+            <div id="mqttKeyHelp" class="form-text">
               Chave de acesso do Servidor da Adafruit.
             </div>
           </div>

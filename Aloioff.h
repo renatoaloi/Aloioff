@@ -8,6 +8,8 @@
 #include "fauxmoESP.h"
 #include <DNSServer.h>
 #include <WiFiUdp.h>
+#include "Adafruit_MQTT.h"
+#include "Adafruit_MQTT_Client.h"
 
 #define UDP_PORT 12345
 
@@ -41,18 +43,23 @@ char reply[] = "Packet received!";
 
 struct UserConfig
 {
-  int id;
+  int  id;
   char ssid[20];
   char password[20];
   char dispositivo[20];
   char dominio[20];
   bool modoAP;
   byte modoOperacao;
+  char mqttServer[20];
+  int  mqttPort;
+  char mqttUsername[20];
+  char mqttPassword[40];
+  char mqttFeed[40];
 };
 
 unsigned long tempoOpenedFile = 0L;
 static bool openedFile = false;
-int UserId = 91305;
+int UserId = 91306;
 int eeAddress = 0;
 static struct UserConfig userConfig;
 
