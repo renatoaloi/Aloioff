@@ -22,7 +22,7 @@
 #define BUTTON 3
 #define DEBUG 1
 #define DEBUG_REMOTO 0
-#define EEPROM_SIZE 128
+#define EEPROM_SIZE 512
 #define WIFI_STA_TIMEOUT 10000
 
 const byte DNS_PORT = 53;
@@ -59,7 +59,7 @@ struct UserConfig
 
 unsigned long tempoOpenedFile = 0L;
 static bool openedFile = false;
-int UserId = 91306;
+int UserId = 91307;
 int eeAddress = 0;
 static struct UserConfig userConfig;
 

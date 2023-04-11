@@ -119,12 +119,23 @@
       <div class="mt-4 mb-3">
         <input
           type="button"
+          id="nextButton"
           class="btn btn-success btn-lg"
           value="A V A N Ç A R >>"
-          onclick="location.href='wifi.html';"
+          onclick="saveField('deviceName', 'feedName', 
+                      'mqttServer', 'mqttPort', 'mqttUsername', 
+                      'mqttKey', 'nextButton');"
           style="width: 100%"
         />
       </div>
     </div>
   </body>
+  <script>
+    getField("deviceName", "nextButton");
+    getField("feedName", "nextButton");
+    getField("mqttServer", "nextButton");
+    getField("mqttPort", "nextButton");
+    getField("mqttUsername", "nextButton");
+    getField("mqttKey", "nextButton");
+  </script>
 </html>

@@ -56,19 +56,8 @@ void initWebServerModoConfig()
     server.on("/modo/state", handleModoOperacaoState);
     server.on("/wifi/config", handleWifiConfig);
     server.on("/wifi/state", handleWifiState);
-
-    server.on("/mqtt/server/config", handleMQTTServerConfig);
-    server.on("/mqtt/server/state", handleMQTTServerState);
-    server.on("/mqtt/port/config", handleMQTTPortConfig);
-    server.on("/mqtt/port/state", handleMQTTPortState);
-    server.on("/mqtt/username/config", handleMQTTUsernameConfig);
-    server.on("/mqtt/username/state", handleMQTTUsernameState);
-    server.on("/mqtt/password/config", handleMQTTPasswordConfig);
-    server.on("/mqtt/password/state", handleMQTTPasswordState);
-    server.on("/mqtt/feed/config", handleMQTTFeedConfig);
-    server.on("/mqtt/feed/state", handleMQTTFeedState);
-    
-    
+    server.on("/mqtt/config", handleMQTTConfig);
+    server.on("/mqtt/state", handleMQTTState);
     server.on("/relay", handleRelay);
     server.on("/reset", handleReset);
     server.onNotFound(handleFileSystem);
@@ -78,16 +67,38 @@ void initWebServerModoConfig()
 }
 
 
-void handleMQTTServerConfig () {}
-void handleMQTTServerState () {}
-void handleMQTTPortConfig () {}
-void handleMQTTPortState () {}
-void handleMQTTUsernameConfig () {}
-void handleMQTTUsernameState () {}
-void handleMQTTPasswordConfig () {}
-void handleMQTTPasswordState () {}
-void handleMQTTFeedConfig () {}
-void handleMQTTFeedState () {}
+void handleMQTTConfig () {
+  const char *_feed = server.arg(0).c_str();
+  const char *_server = server.arg(1).c_str();
+  const char *_port = server.arg(2).c_str();
+  const char *_username = server.arg(3).c_str();
+  const char *_password = server.arg(4).c_str();
+
+  saveMQTTFeed(_feed);
+  saveMQTTServer(_server);
+  saveMQTTPort(atoi(_port));
+  saveMQTTUsername(_username);
+  saveMQTTPassword(_password);
+  
+  handleDeviceState();
+}
+
+
+void handleMQTTState () {
+  String mqttData = "";
+  mqttData.concat(getMQTTFeed());
+  mqttData.concat("|");
+  mqttData.concat(getMQTTServer());
+  mqttData.concat("|");
+  mqttData.concat(getMQTTPort());
+  mqttData.concat("|");
+  mqttData.concat(getMQTTUsername());
+  mqttData.concat("|");
+  mqttData.concat(getMQTTPassword());
+  if (DEBUG) Serial.print("Handle MQTT State: ");
+  if (DEBUG) Serial.println(mqttData);
+    server.send(200, "text/plain", mqttData.c_str());  
+}
 
 void handleIndex()
 {
