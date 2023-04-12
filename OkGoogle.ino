@@ -27,21 +27,21 @@ void initOkGoogle() {
     getMQTTUsername(), 
     getMQTTPassword()
   );
-  String strSubscribe = getMQTTUsername();
-  strSubscribe.concat(getMQTTFeed());
-  mqttFeed = Adafruit_MQTT_Subscribe(&mqtt, strSubscribe.c_str() );
+  char subsFeed[256];
+  strcpy(subsFeed, "");
+  sprintf(subsFeed, "%s%s", getMQTTUsername(), getMQTTFeed()); 
+  if (DEBUG) Serial.println(subsFeed);
+  mqttFeed = Adafruit_MQTT_Subscribe(&mqtt, subsFeed);
   mqtt.subscribe(&mqttFeed);
   MQTT_connect();
 }
 
 void handleOkGoogle() {
+  MQTT_connect();
   Adafruit_MQTT_Subscribe *subscription;
-  while ((subscription = mqtt.readSubscription(20000))) {
-    if (subscription == &mqttFeed) {
-      Serial.print(F("Got: "));
-      Serial.println((char *)mqttFeed.lastread);
-      //int Light1_State = atoi((char *)mqttFeed.lastread);
-      //digitalWrite(Relay1, !Light1_State);
-    }
+  subscription = mqtt.readSubscription(20000);
+  if (subscription == &mqttFeed) {
+    if (DEBUG) Serial.print(F("Got: "));
+    if (DEBUG) Serial.println((char *)mqttFeed.lastread);
   }
 }
