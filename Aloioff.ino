@@ -29,11 +29,13 @@ void setup()
       }
       else if (getModoOperacao() == 2)
       {
-        initSmartphone();
+        if (DEBUG) Serial.println("Iniciando modo #2");
+        //initSmartphone();
+        initOkGoogle();
       }
       else
       {
-        // Futuramente OK Google
+        // Futuramente Home Assistant e Node Red
       }
 
       // Starting discovery UDP service
@@ -48,13 +50,15 @@ void setup()
 
 void loop()
 {
-  if (getModoAP() || getModoOperacao() == 2) {
-    if (getModoAP()) dnsServer.processNextRequest();
+  if (getModoAP()) {
+    dnsServer.processNextRequest();
     handleWebServer();
   }
   if (!getModoAP()) {
     if (getModoOperacao() == 1)
       alexaHandle();
+    else if (getModoOperacao() == 2)
+      handleOkGoogle();
     handleUDP();
   }
 }

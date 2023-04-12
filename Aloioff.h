@@ -1,5 +1,4 @@
 #include <ESP8266WiFi.h>
-#include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <SPI.h>
 #include <FS.h>
@@ -37,6 +36,10 @@ ESP8266WebServer server(80);
 DNSServer dnsServer;
 fauxmoESP fauxmo;
 WiFiUDP UDP;
+WiFiClient client;
+Adafruit_MQTT_Client mqtt(&client, "", 0, "", "");
+Adafruit_MQTT_Subscribe mqttFeed = Adafruit_MQTT_Subscribe(&mqtt, "");
+
 
 char packet[255];
 char reply[] = "Packet received!";
@@ -59,7 +62,7 @@ struct UserConfig
 
 unsigned long tempoOpenedFile = 0L;
 static bool openedFile = false;
-int UserId = 91307;
+int UserId = 91308;
 int eeAddress = 0;
 static struct UserConfig userConfig;
 
