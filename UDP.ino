@@ -38,5 +38,6 @@ void handleUDP() {
       if (DEBUG) Serial.println("Mounting packet...");
       mountPacket();
     }
+    if (DEBUG) Serial.println("Finished responding UDP!");
   }
 }
