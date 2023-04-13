@@ -39,9 +39,15 @@ void initOkGoogle() {
 void handleOkGoogle() {
   MQTT_connect();
   Adafruit_MQTT_Subscribe *subscription;
-  subscription = mqtt.readSubscription(20000);
-  if (subscription == &mqttFeed) {
-    if (DEBUG) Serial.print(F("Got: "));
-    if (DEBUG) Serial.println((char *)mqttFeed.lastread);
+  if ((subscription = mqtt.readSubscription(20000))) {
+    if (DEBUG) Serial.print("Lendo subscricoes...");
+    if (subscription == &mqttFeed) {
+      if (DEBUG) Serial.print(F("Got: "));
+      if (DEBUG) Serial.println((char *)mqttFeed.lastread);
+    }
+    else {
+      if (DEBUG) Serial.print("Nenhuma subscricao!");
+      if (DEBUG) delay(100);
+    }
   }
 }
