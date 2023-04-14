@@ -6,9 +6,8 @@
 #include <EEPROM.h>
 #include "fauxmoESP.h"
 #include <DNSServer.h>
-//#include <WiFiUdp.h>
-#include "Adafruit_MQTT.h"
-#include "Adafruit_MQTT_Client.h"
+#include <WiFiUdp.h>
+#include <PubSubClient.h>
 
 #define UDP_PORT 12345
 
@@ -35,7 +34,10 @@ IPAddress subnet(255, 255, 255, 0);
 ESP8266WebServer server(80);
 DNSServer dnsServer;
 fauxmoESP fauxmo;
-//WiFiUDP UDP;
+WiFiUDP UDP;
+
+WiFiClient espClient;
+PubSubClient mqtt(espClient);
 
 char packet[255];
 char reply[] = "Packet received!";

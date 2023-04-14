@@ -1,68 +1,49 @@
-void MQTT_connect(Adafruit_MQTT_Client mqtt) {
-  int8_t ret;
-  if (mqtt.connected()) return;
-  if (DEBUG) Serial.print("Connecting to MQTT... ");
-  uint8_t retries = 3;
-  while ((ret = mqtt.connect()) != 0) {
-    if (DEBUG) Serial.println(mqtt.connectErrorString(ret));
-    if (DEBUG) Serial.println("Retrying MQTT connection in 5 seconds...");
-    mqtt.disconnect();
-    delay(5000);
-    retries--;
-    if (retries == 0) break;
+void MQTT_reconnect() {
+  while (!mqtt.connected()) {
+    if (DEBUG) Serial.print("Attempting MQTT connection...");
+    String clientId = "Aloioff-" + String(getUserConfigId());
+    if (mqtt.connect(clientId.c_str(), getMQTTUsername(), getMQTTPassword())) {
+      if (DEBUG) Serial.println("connected");
+      String subsFeed = String(getMQTTUsername()) + String(getMQTTFeed());
+      mqtt.subscribe(subsFeed.c_str());
+    } else {
+      if (DEBUG) Serial.print("failed, rc=");
+      if (DEBUG) Serial.print(mqtt.state());
+      if (DEBUG) Serial.println(" try again in 5 seconds");
+      delay(5000);
+    }
   }
-  if (DEBUG) { 
-    if (retries)
-      Serial.println("MQTT Connected!");
-    else 
-      Serial.println("FAILED !!! MQTT NOT Connected!");
+}
+
+void OkGoogleConnect() {
+  if (!mqtt.connected()) {
+    MQTT_reconnect();
   }
+}
+
+void OkGoogleCallback(char* topic, byte* payload, unsigned int length) {
+  if (DEBUG) Serial.print("Message arrived [");
+  if (DEBUG) Serial.print(topic);
+  if (DEBUG) Serial.print("] ");
+  for (int i = 0; i < length; i++) {
+    if (DEBUG) Serial.print((char)payload[i]);
+  }
+  if (DEBUG) Serial.println();
+
+  if ((char)payload[0] == '1') {
+    
+  } else {
+    
+  }
+
 }
 
 void initOkGoogle() {
-//  mqtt = Adafruit_MQTT_Client(
-//    &client, 
-//    getMQTTServer(), 
-//    getMQTTPort(), 
-//    getMQTTUsername(), 
-//    getMQTTPassword()
-//  );
-//  char subsFeed[256];
-//  strcpy(subsFeed, "");
-//  sprintf(subsFeed, "%s%s", getMQTTUsername(), getMQTTFeed()); 
-//  if (DEBUG) Serial.println(subsFeed);
-//  mqttFeed = Adafruit_MQTT_Subscribe(&mqtt, subsFeed);
-//  mqtt.subscribe(&mqttFeed);
-//  MQTT_connect();
+  mqtt.setServer(getMQTTServer(), getMQTTPort());
+  mqtt.setCallback(OkGoogleCallback);
 }
 
 void handleOkGoogle() {
-//  WiFiClient client;
-//  static Adafruit_MQTT_Client mqtt = Adafruit_MQTT_Client(
-//    &client, 
-//    getMQTTServer(), 
-//    getMQTTPort(), 
-//    getMQTTUsername(), 
-//    getMQTTPassword()
-//  );
-//  char subsFeed[256];
-//  strcpy(subsFeed, "");
-//  sprintf(subsFeed, "%s%s", getMQTTUsername(), getMQTTFeed()); 
-//  if (DEBUG) Serial.println(subsFeed);
-//  Adafruit_MQTT_Subscribe mqttFeed = Adafruit_MQTT_Subscribe(&mqtt, subsFeed);
-//  mqtt.subscribe(&mqttFeed);
-//  //
-//  MQTT_connect(mqtt);
-//  Adafruit_MQTT_Subscribe *subscription;
-//  if ((subscription = mqtt.readSubscription(500))) {
-//    if (DEBUG) Serial.print("Lendo subscricoes...");
-//    if (subscription == &mqttFeed) {
-//      if (DEBUG) Serial.print(F("Got: "));
-//      if (DEBUG) Serial.println((char *)mqttFeed.lastread);
-//    }
-//    else {
-//      if (DEBUG) Serial.print("Nenhuma subscricao!");
-//      if (DEBUG) delay(100);
-//    }
-//  }
+  OkGoogleConnect();
+  mqtt.loop();
 }

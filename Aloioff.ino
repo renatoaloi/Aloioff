@@ -31,7 +31,7 @@ void setup()
       {
         if (DEBUG) Serial.println("Iniciando modo #2");
         //initSmartphone();
-        //initOkGoogle();
+        initOkGoogle();
       }
       else
       {
@@ -39,7 +39,7 @@ void setup()
       }
 
       // Starting discovery UDP service
-      //beginUDP();
+      beginUDP();
     }
     else
     {
@@ -59,6 +59,6 @@ void loop()
       alexaHandle();
     else if (getModoOperacao() == 2)
       handleOkGoogle();
-    //handleUDP();
+    handleUDP();
   }
 }
