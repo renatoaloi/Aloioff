@@ -6,7 +6,7 @@
 #include <EEPROM.h>
 #include "fauxmoESP.h"
 #include <DNSServer.h>
-#include <WiFiUdp.h>
+//#include <WiFiUdp.h>
 #include "Adafruit_MQTT.h"
 #include "Adafruit_MQTT_Client.h"
 
@@ -35,11 +35,7 @@ IPAddress subnet(255, 255, 255, 0);
 ESP8266WebServer server(80);
 DNSServer dnsServer;
 fauxmoESP fauxmo;
-WiFiUDP UDP;
-WiFiClient client;
-Adafruit_MQTT_Client mqtt(&client, "", 0, "", "");
-Adafruit_MQTT_Subscribe mqttFeed = Adafruit_MQTT_Subscribe(&mqtt, "");
-
+//WiFiUDP UDP;
 
 char packet[255];
 char reply[] = "Packet received!";
