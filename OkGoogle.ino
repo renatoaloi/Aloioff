@@ -39,6 +39,7 @@ void OkGoogleCallback(char* topic, byte* payload, unsigned int length) {
 }
 
 void initOkGoogle() {
+  initRelay();
   mqtt.setServer(getMQTTServer(), getMQTTPort());
   mqtt.setCallback(OkGoogleCallback);
 }
