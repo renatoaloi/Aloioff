@@ -9,6 +9,7 @@ void setup()
   }
 
   initUserConfig();
+  configButton();
 
   if (getModoAP())
   {
@@ -50,6 +51,11 @@ void setup()
 
 void loop()
 {
+  if (checkButton()) {
+    saveUserConfig("", "", "", "", 0, true, "", 0, "", "", "");
+    saveModoAP(true);
+    resetDevice();
+  }
   if (getModoAP()) {
     dnsServer.processNextRequest();
     handleWebServer();
