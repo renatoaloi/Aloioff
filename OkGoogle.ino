@@ -31,9 +31,9 @@ void OkGoogleCallback(char* topic, byte* payload, unsigned int length) {
   if (DEBUG) Serial.println();
 
   if ((char)payload[0] == '1') {
-    
+    turnOnRelay();
   } else {
-    
+    turnOffRelay();
   }
 
 }
