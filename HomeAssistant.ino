@@ -1,8 +1,8 @@
-void OkGoogleConnect() {
+void HomeAssistantConnect() {
   mqttConnect();
 }
 
-void OkGoogleCallback(char* topic, byte* payload, unsigned int length) {
+void HomeAssistantCallback(char* topic, byte* payload, unsigned int length) {
   if (DEBUG) Serial.print("Message arrived [");
   if (DEBUG) Serial.print(topic);
   if (DEBUG) Serial.print("] ");
@@ -19,12 +19,12 @@ void OkGoogleCallback(char* topic, byte* payload, unsigned int length) {
 
 }
 
-void initOkGoogle() {
+void initHomeAssistant() {
   initRelay();
-  mqttInit(OkGoogleCallback);
+  mqttInit(HomeAssistantCallback);
 }
 
-void handleOkGoogle() {
-  OkGoogleConnect();
+void handleHomeAssistant() {
+  HomeAssistantConnect();
   mqttLoop();
 }

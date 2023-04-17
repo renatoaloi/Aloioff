@@ -56,11 +56,16 @@ struct UserConfig
   char mqttUsername[20];
   char mqttPassword[40];
   char mqttFeed[40];
+  char mqttCmd[40];
+  char mqttStatus[40];
+  char mqttDeviceClass[40];
+  char mqttPayloadOn[10];
+  char mqttPayloadOff[10];
 };
 
 unsigned long tempoOpenedFile = 0L;
 static bool openedFile = false;
-int UserId = 91308;
+int UserId = 91309;
 int eeAddress = 0;
 static struct UserConfig userConfig;
 

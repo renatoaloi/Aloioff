@@ -6,7 +6,7 @@ void initUserConfig()
     if (userConfig.id != UserId)
     {
         clearEEPROM();
-        saveUserConfig("", "", "", "", 0, true, "", 0, "", "", "");
+        saveUserConfig("", "", "", "", 0, true, "", 0, "", "", "", "", "", "", "", "");
     }
 }
 
@@ -21,7 +21,12 @@ void saveUserConfig(
   int _mqttPort,
   const char *_mqttUsername,
   const char *_mqttPassword,
-  const char *_mqttFeed
+  const char *_mqttFeed,
+  const char *_mqttCmd,
+  const char *_mqttStatus,
+  const char *_mqttDeviceClass,
+  const char *_mqttPayloadOn,
+  const char *_mqttPayloadOff
 )
 {
     userConfig.id = UserId;
@@ -34,6 +39,11 @@ void saveUserConfig(
     strcpy(userConfig.mqttUsername, _mqttUsername);
     strcpy(userConfig.mqttPassword, _mqttPassword);
     strcpy(userConfig.mqttFeed, _mqttFeed);
+    strcpy(userConfig.mqttCmd, _mqttCmd);
+    strcpy(userConfig.mqttStatus, _mqttStatus);
+    strcpy(userConfig.mqttDeviceClass, _mqttDeviceClass);
+    strcpy(userConfig.mqttPayloadOn, _mqttPayloadOn);
+    strcpy(userConfig.mqttPayloadOff, _mqttPayloadOff);
     userConfig.modoOperacao = _modo;
     userConfig.modoAP = _modoAP;
     commitEEPROM(eeAddress);
@@ -52,7 +62,12 @@ void saveMQTTServer(const char *_mqttServer)
         userConfig.mqttPort,
         userConfig.mqttUsername,
         userConfig.mqttPassword,
-        userConfig.mqttFeed
+        userConfig.mqttFeed,
+        userConfig.mqttCmd,
+        userConfig.mqttStatus,
+        userConfig.mqttDeviceClass,
+        userConfig.mqttPayloadOn,
+        userConfig.mqttPayloadOff
     );
 }
 
@@ -69,7 +84,12 @@ void saveMQTTPort(int _mqttPort)
         _mqttPort,
         userConfig.mqttUsername,
         userConfig.mqttPassword,
-        userConfig.mqttFeed
+        userConfig.mqttFeed,
+        userConfig.mqttCmd,
+        userConfig.mqttStatus,
+        userConfig.mqttDeviceClass,
+        userConfig.mqttPayloadOn,
+        userConfig.mqttPayloadOff
     );
 }
 
@@ -86,7 +106,12 @@ void saveMQTTUsername(const char *_mqttUsername)
         userConfig.mqttPort,
         _mqttUsername,
         userConfig.mqttPassword,
-        userConfig.mqttFeed
+        userConfig.mqttFeed,
+        userConfig.mqttCmd,
+        userConfig.mqttStatus,
+        userConfig.mqttDeviceClass,
+        userConfig.mqttPayloadOn,
+        userConfig.mqttPayloadOff
     );
 }
 
@@ -103,7 +128,12 @@ void saveMQTTPassword(const char *_mqttPassword)
         userConfig.mqttPort,
         userConfig.mqttUsername,
         _mqttPassword,
-        userConfig.mqttFeed
+        userConfig.mqttFeed,
+        userConfig.mqttCmd,
+        userConfig.mqttStatus,
+        userConfig.mqttDeviceClass,
+        userConfig.mqttPayloadOn,
+        userConfig.mqttPayloadOff
     );
 }
 
@@ -120,7 +150,12 @@ void saveMQTTFeed(const char *_mqttFeed)
         userConfig.mqttPort,
         userConfig.mqttUsername,
         userConfig.mqttPassword,
-        _mqttFeed
+        _mqttFeed,
+        userConfig.mqttCmd,
+        userConfig.mqttStatus,
+        userConfig.mqttDeviceClass,
+        userConfig.mqttPayloadOn,
+        userConfig.mqttPayloadOff
     );
 }
 
@@ -137,7 +172,12 @@ void saveModoAP(bool _modo)
         userConfig.mqttPort,
         userConfig.mqttUsername,
         userConfig.mqttPassword,
-        userConfig.mqttFeed
+        userConfig.mqttFeed,
+        userConfig.mqttCmd,
+        userConfig.mqttStatus,
+        userConfig.mqttDeviceClass,
+        userConfig.mqttPayloadOn,
+        userConfig.mqttPayloadOff
     );
 }
 
@@ -154,7 +194,12 @@ void saveWifiConfig(const char *_ssid, const char *_pass)
         userConfig.mqttPort,
         userConfig.mqttUsername,
         userConfig.mqttPassword,
-        userConfig.mqttFeed
+        userConfig.mqttFeed,
+        userConfig.mqttCmd,
+        userConfig.mqttStatus,
+        userConfig.mqttDeviceClass,
+        userConfig.mqttPayloadOn,
+        userConfig.mqttPayloadOff
     );
 }
 
@@ -171,7 +216,12 @@ void saveDevice(const char *_device)
         userConfig.mqttPort,
         userConfig.mqttUsername,
         userConfig.mqttPassword,
-        userConfig.mqttFeed
+        userConfig.mqttFeed,
+        userConfig.mqttCmd,
+        userConfig.mqttStatus,
+        userConfig.mqttDeviceClass,
+        userConfig.mqttPayloadOn,
+        userConfig.mqttPayloadOff
     );
 }
 
@@ -188,7 +238,12 @@ void saveDomain(const char *_domain)
         userConfig.mqttPort,
         userConfig.mqttUsername,
         userConfig.mqttPassword,
-        userConfig.mqttFeed
+        userConfig.mqttFeed,
+        userConfig.mqttCmd,
+        userConfig.mqttStatus,
+        userConfig.mqttDeviceClass,
+        userConfig.mqttPayloadOn,
+        userConfig.mqttPayloadOff
     );
 }
 
@@ -205,7 +260,122 @@ void saveModoOperacao(byte _modo)
         userConfig.mqttPort,
         userConfig.mqttUsername,
         userConfig.mqttPassword,
-        userConfig.mqttFeed
+        userConfig.mqttFeed,
+        userConfig.mqttCmd,
+        userConfig.mqttStatus,
+        userConfig.mqttDeviceClass,
+        userConfig.mqttPayloadOn,
+        userConfig.mqttPayloadOff
+    );
+}
+
+void saveMQTTCmd(char *_mqttCmd)
+{
+    saveUserConfig(
+        userConfig.ssid,
+        userConfig.password,
+        userConfig.dispositivo,
+        userConfig.dominio,
+        userConfig.modoOperacao,
+        userConfig.modoAP,
+        userConfig.mqttServer,
+        userConfig.mqttPort,
+        userConfig.mqttUsername,
+        userConfig.mqttPassword,
+        userConfig.mqttFeed,
+        _mqttCmd,
+        userConfig.mqttStatus,
+        userConfig.mqttDeviceClass,
+        userConfig.mqttPayloadOn,
+        userConfig.mqttPayloadOff
+    );
+}
+
+void saveMQTTStatus(char *_mqttStatus)
+{
+    saveUserConfig(
+        userConfig.ssid,
+        userConfig.password,
+        userConfig.dispositivo,
+        userConfig.dominio,
+        userConfig.modoOperacao,
+        userConfig.modoAP,
+        userConfig.mqttServer,
+        userConfig.mqttPort,
+        userConfig.mqttUsername,
+        userConfig.mqttPassword,
+        userConfig.mqttFeed,
+        userConfig.mqttCmd,
+        _mqttStatus,
+        userConfig.mqttDeviceClass,
+        userConfig.mqttPayloadOn,
+        userConfig.mqttPayloadOff
+    );
+}
+
+void saveMQTTDeviceClass(char *_mqttDeviceClass)
+{
+    saveUserConfig(
+        userConfig.ssid,
+        userConfig.password,
+        userConfig.dispositivo,
+        userConfig.dominio,
+        userConfig.modoOperacao,
+        userConfig.modoAP,
+        userConfig.mqttServer,
+        userConfig.mqttPort,
+        userConfig.mqttUsername,
+        userConfig.mqttPassword,
+        userConfig.mqttFeed,
+        userConfig.mqttCmd,
+        userConfig.mqttStatus,
+        _mqttDeviceClass,
+        userConfig.mqttPayloadOn,
+        userConfig.mqttPayloadOff
+    );
+}
+
+void saveMQTTPayloadOn(char *_mqttPayloadOn)
+{
+    saveUserConfig(
+        userConfig.ssid,
+        userConfig.password,
+        userConfig.dispositivo,
+        userConfig.dominio,
+        userConfig.modoOperacao,
+        userConfig.modoAP,
+        userConfig.mqttServer,
+        userConfig.mqttPort,
+        userConfig.mqttUsername,
+        userConfig.mqttPassword,
+        userConfig.mqttFeed,
+        userConfig.mqttCmd,
+        userConfig.mqttStatus,
+        userConfig.mqttDeviceClass,
+        _mqttPayloadOn,
+        userConfig.mqttPayloadOff
+    );
+}
+
+void saveMQTTPayloadOff(char *_mqttPayloadOff)
+{
+    saveUserConfig(
+        userConfig.ssid,
+        userConfig.password,
+        userConfig.dispositivo,
+        userConfig.dominio,
+        userConfig.modoOperacao,
+        userConfig.modoAP,
+        userConfig.mqttServer,
+        userConfig.mqttPort,
+        userConfig.mqttUsername,
+        userConfig.mqttPassword,
+        userConfig.mqttFeed,
+        userConfig.mqttCmd,
+        userConfig.mqttStatus,
+        userConfig.mqttDeviceClass,
+        userConfig.mqttPayloadOn,
+        _mqttPayloadOff
     );
 }
 
@@ -234,6 +404,30 @@ const char *getMQTTFeed()
     return userConfig.mqttFeed;
 }
 
+const char *getMQTTCmd()
+{
+    return userConfig.mqttCmd;
+}
+
+const char *getMQTTStatus()
+{
+    return userConfig.mqttStatus;
+}
+
+const char *getMQTTDeviceClass()
+{
+    return userConfig.mqttDeviceClass;
+}
+
+const char *getMQTTPayloadOn()
+{
+    return userConfig.mqttPayloadOn;
+}
+
+const char *getMQTTPayloadOff()
+{
+    return userConfig.mqttPayloadOff;
+}
 
 const char *getWifiSsid()
 {
@@ -310,8 +504,13 @@ void getUserConfig()
         Serial.print("Modo AP ");
         Serial.println(userConfig.modoAP ? "ligado!" : "desligado!");
         Serial.print("Modo de Operacao ");
-        Serial.println(userConfig.modoOperacao == 1 ? "Alexa" : userConfig.modoOperacao == 2 ? "Google Home (Ok Google)"
-                                                                                             : "Nao implementado");
+        Serial.println(
+          userConfig.modoOperacao == 1 ? "Alexa" 
+          : userConfig.modoOperacao == 2 ? "Google Home (Ok Google)"
+          : userConfig.modoOperacao == 3 ? "Home Assistant (MQTT)"
+          : userConfig.modoOperacao == 4 ? "Node Red (MQTT)"
+          : "Desconhecido"
+        );
         Serial.print("MQTT Server: ");
         Serial.println(userConfig.mqttServer);
         Serial.print("MQTT Port: ");
@@ -322,6 +521,15 @@ void getUserConfig()
         Serial.println(userConfig.mqttPassword);
         Serial.print("MQTT Feed: ");
         Serial.println(userConfig.mqttFeed);
-        
+        Serial.print("MQTT Cmd: ");
+        Serial.println(userConfig.mqttCmd);
+        Serial.print("MQTT Status: ");
+        Serial.println(userConfig.mqttStatus);
+        Serial.print("MQTT Device Class: ");
+        Serial.println(userConfig.mqttDeviceClass);
+        Serial.print("MQTT PayloadOn: ");
+        Serial.println(userConfig.mqttPayloadOn);
+        Serial.print("MQTT PayloadOff: ");
+        Serial.println(userConfig.mqttPayloadOff);
     }
 }
