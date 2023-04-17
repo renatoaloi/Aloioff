@@ -56,12 +56,48 @@ void initWebServerModoConfig()
     server.on("/modo/state", handleModoOperacaoState);
     server.on("/wifi/config", handleWifiConfig);
     server.on("/wifi/state", handleWifiState);
+    server.on("/mqtt/config", handleMQTTConfig);
+    server.on("/mqtt/state", handleMQTTState);
     server.on("/relay", handleRelay);
     server.on("/reset", handleReset);
     server.onNotFound(handleFileSystem);
     //server.onNotFound([]() {
     //  server.send(200, "text/html", responseHTML);
     //});
+}
+
+
+void handleMQTTConfig () {
+  const char *_feed = server.arg(0).c_str();
+  const char *_server = server.arg(1).c_str();
+  const char *_port = server.arg(2).c_str();
+  const char *_username = server.arg(3).c_str();
+  const char *_password = server.arg(4).c_str();
+
+  saveMQTTFeed(_feed);
+  saveMQTTServer(_server);
+  saveMQTTPort(atoi(_port));
+  saveMQTTUsername(_username);
+  saveMQTTPassword(_password);
+  
+  handleDeviceState();
+}
+
+
+void handleMQTTState () {
+  String mqttData = "";
+  mqttData.concat(getMQTTFeed());
+  mqttData.concat("|");
+  mqttData.concat(getMQTTServer());
+  mqttData.concat("|");
+  mqttData.concat(getMQTTPort());
+  mqttData.concat("|");
+  mqttData.concat(getMQTTUsername());
+  mqttData.concat("|");
+  mqttData.concat(getMQTTPassword());
+  if (DEBUG) Serial.print("Handle MQTT State: ");
+  if (DEBUG) Serial.println(mqttData);
+    server.send(200, "text/plain", mqttData.c_str());  
 }
 
 void handleIndex()

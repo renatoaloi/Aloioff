@@ -1,5 +1,4 @@
 #include <ESP8266WiFi.h>
-#include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <SPI.h>
 #include <FS.h>
@@ -8,6 +7,7 @@
 #include "fauxmoESP.h"
 #include <DNSServer.h>
 #include <WiFiUdp.h>
+#include <PubSubClient.h>
 
 #define UDP_PORT 12345
 
@@ -20,7 +20,7 @@
 #define BUTTON 3
 #define DEBUG 1
 #define DEBUG_REMOTO 0
-#define EEPROM_SIZE 128
+#define EEPROM_SIZE 512
 #define WIFI_STA_TIMEOUT 10000
 
 const byte DNS_PORT = 53;
@@ -36,23 +36,31 @@ DNSServer dnsServer;
 fauxmoESP fauxmo;
 WiFiUDP UDP;
 
+WiFiClient espClient;
+PubSubClient mqtt(espClient);
+
 char packet[255];
 char reply[] = "Packet received!";
 
 struct UserConfig
 {
-  int id;
+  int  id;
   char ssid[20];
   char password[20];
   char dispositivo[20];
   char dominio[20];
   bool modoAP;
   byte modoOperacao;
+  char mqttServer[20];
+  int  mqttPort;
+  char mqttUsername[20];
+  char mqttPassword[40];
+  char mqttFeed[40];
 };
 
 unsigned long tempoOpenedFile = 0L;
 static bool openedFile = false;
-int UserId = 91305;
+int UserId = 91308;
 int eeAddress = 0;
 static struct UserConfig userConfig;
 
