@@ -2,17 +2,16 @@ void HomeAssistantCallback(char* topic, byte* payload, unsigned int length) {
   if (DEBUG) Serial.print("Message arrived [");
   if (DEBUG) Serial.print(topic);
   if (DEBUG) Serial.print("] ");
+  String msgArrived = "";
   for (int i = 0; i < length; i++) {
-    if (DEBUG) Serial.print((char)payload[i]);
+    msgArrived.concat((char)payload[i]);
   }
-  if (DEBUG) Serial.println();
-
-  if ((char)payload[0] == '1') {
+  if (DEBUG) Serial.println(msgArrived);
+  if (msgArrived.equals(getMQTTPayloadOn())) {
     turnOnRelay();
-  } else {
+  } else if (msgArrived.equals(getMQTTPayloadOff())) {
     turnOffRelay();
   }
-
 }
 
 void publishInitialStateTopic(const char *topicState, const char* topicInitalValue) {
@@ -25,8 +24,8 @@ void subscribeSwitchTopic(const char *topicCommand) {
 
 void initHomeAssistant() {
   initRelay();
-  mqttConnect();
   mqttInit(HomeAssistantCallback);
+  mqttConnect();
   createDeviceConfigTopic();
   subscribeSwitchTopic(getMQTTCmd());
   publishInitialStateTopic(getMQTTStatus(), getMQTTPayloadOff());
