@@ -31,12 +31,12 @@ void setup()
       else if (getModoOperacao() == 2)
       {
         if (DEBUG) Serial.println("Iniciando modo #2");
-        //initSmartphone();
         initOkGoogle();
       }
-      else
+      else if (getModoOperacao() == 3)
       {
-        // Futuramente Home Assistant e Node Red
+        if (DEBUG) Serial.println("Iniciando modo #3");
+        initHomeAssistant();
       }
 
       // Starting discovery UDP service
@@ -52,7 +52,7 @@ void setup()
 void loop()
 {
   if (checkButton()) {
-    saveUserConfig("", "", "", "", 0, true, "", 0, "", "", "");
+    saveUserConfig("", "", "", "", 0, true, "", 0, "", "", "", "", "", "", "", "");
     saveModoAP(true);
     resetDevice();
   }
@@ -65,6 +65,8 @@ void loop()
       alexaHandle();
     else if (getModoOperacao() == 2)
       handleOkGoogle();
+    else if (getModoOperacao() == 3)
+      handleHomeAssistant();
     handleUDP();
   }
 }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ALOIOFF - A Tomada Inteligente para todas dominar!</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
-    <script src="../js/wizzard.js"></script>
+    <script src="../js/homeassistant.js"></script>
   </head>
 
   <body class="text-bg-dark">
@@ -79,20 +79,6 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="uniqueId" class="form-label form-control-lg">
-              Unique ID
-            </label>
-            <input
-              type="text"
-              class="form-control form-control-lg"
-              id="uniqueId"
-              aria-describedby="uniqueIdHelp"
-            />
-            <div id="uniqueIdHelp" class="form-text">
-              Chave única identificadora do dispositivo.
-            </div>
-          </div>
-          <div class="mb-3">
             <label for="deviceClass" class="form-label form-control-lg">
               Device Class
             </label>
@@ -149,12 +135,23 @@
       <div class="mt-4 mb-3">
         <input
           type="button"
+          id="nextButton"
           class="btn btn-success btn-lg"
           value="A V A N Ç A R >>"
-          onclick="location.href='wifi.html';"
+          onclick="saveField('configTopic', 
+                      'commandTopic', 'statusTopic', 'deviceClass', 
+                      'payloadOn', 'payloadOff', 'nextButton');"
           style="width: 100%"
         />
       </div>
     </div>
   </body>
+  <script>
+    getField("configTopic", "nextButton");
+    getField("commandTopic", "nextButton");
+    getField("statusTopic", "nextButton");
+    getField("deviceClass", "nextButton");
+    getField("payloadOn", "nextButton");
+    getField("payloadOff", "nextButton");
+  </script>
 </html>

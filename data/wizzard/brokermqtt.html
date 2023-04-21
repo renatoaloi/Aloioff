@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ALOIOFF - A Tomada Inteligente para todas dominar!</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
-    <script src="../js/wizzard.js"></script>
+    <script src="../js/brokermqtt.js"></script>
   </head>
 
   <body class="text-bg-dark">
@@ -26,6 +26,21 @@
           Primeiro vamos configurar o seu Broker MQTT:
         </div>
         <div class="form-group m-4">
+          <div class="mb-3">
+            <label for="deviceName" class="form-label form-control-lg">
+              Nome do dispositivo
+            </label>
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="deviceName"
+              aria-describedby="deviceNameHelp"
+              placeholder="Luz do Quarto"
+            />
+            <div id="deviceNameHelp" class="form-text">
+              Nome do dispositivo.
+            </div>
+          </div>
           <div class="mb-3">
             <label for="mqttServer" class="form-label form-control-lg">
               MQTT Server
@@ -85,20 +100,28 @@
             </div>
           </div>
         </div>
+        <input type="hidden" id="feedName" value="" />
       </div>
       <div class="mt-4 mb-3">
         <input
           type="button"
+          id="nextButton"
           class="btn btn-success btn-lg"
           value="A V A N Ç A R >>"
-          onclick="selectMqttBroker(
-            document.getElementById('mqttServer').value,
-            document.getElementById('mqttServerPort').value,
-            document.getElementById('mqttUsername').value, 
-            document.getElementById('mqttPassword').value);"
+          onclick="saveField('deviceName', 'feedName', 
+                      'mqttServer', 'mqttServerPort', 'mqttUsername', 
+                      'mqttPassword', 'nextButton');"
           style="width: 100%"
         />
       </div>
     </div>
   </body>
+  <script>
+    getField("deviceName", "nextButton");
+    getField("feedName", "nextButton");
+    getField("mqttServer", "nextButton");
+    getField("mqttServerPort", "nextButton");
+    getField("mqttUsername", "nextButton");
+    getField("mqttPassword", "nextButton");
+  </script>
 </html>

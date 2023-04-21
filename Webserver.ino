@@ -58,6 +58,8 @@ void initWebServerModoConfig()
     server.on("/wifi/state", handleWifiState);
     server.on("/mqtt/config", handleMQTTConfig);
     server.on("/mqtt/state", handleMQTTState);
+    server.on("/homeassistant/config", handleHomeAssistantConfig);
+    server.on("/homeassistant/state", handleHomeAssistantState);
     server.on("/relay", handleRelay);
     server.on("/reset", handleReset);
     server.onNotFound(handleFileSystem);
@@ -100,6 +102,43 @@ void handleMQTTState () {
     server.send(200, "text/plain", mqttData.c_str());  
 }
 
+void handleHomeAssistantConfig () {
+  const char *_feed = server.arg(0).c_str();
+  const char *_cmd = server.arg(1).c_str();
+  const char *_status = server.arg(2).c_str();
+  const char *_deviceClass = server.arg(3).c_str();
+  const char *_payloadOn = server.arg(4).c_str();
+  const char *_payloadOff = server.arg(5).c_str();
+
+  saveMQTTFeed(_feed);
+  saveMQTTCmd(_cmd);
+  saveMQTTStatus(_status);
+  saveMQTTDeviceClass(_deviceClass);
+  saveMQTTPayloadOn(_payloadOn);
+  saveMQTTPayloadOff(_payloadOff);
+  
+  handleHomeAssistantState();
+}
+
+
+void handleHomeAssistantState () {
+  String mqttData = "";
+  mqttData.concat(getMQTTFeed());
+  mqttData.concat("|");
+  mqttData.concat(getMQTTCmd());
+  mqttData.concat("|");
+  mqttData.concat(getMQTTStatus());
+  mqttData.concat("|");
+  mqttData.concat(getMQTTDeviceClass());
+  mqttData.concat("|");
+  mqttData.concat(getMQTTPayloadOn());
+  mqttData.concat("|");
+  mqttData.concat(getMQTTPayloadOff());
+  if (DEBUG) Serial.print("Handle HomeAssistant State: ");
+  if (DEBUG) Serial.println(mqttData);
+  server.send(200, "text/plain", mqttData.c_str());  
+}
+
 void handleIndex()
 {
     server.sendHeader("Location", String("/index.html"), true);
@@ -134,20 +173,10 @@ void handleDomainState()
 
 void handleModoOperacao()
 {
-    const char *_retstr = server.arg(0).c_str();
-
     if (DEBUG) Serial.print("Handle Modo: ");
     if (DEBUG) Serial.println(server.arg(0).c_str());
-    
-    byte _ret;
-    if (_retstr[0] == '1')
-    {
-        _ret = 1;
-    }
-    else
-    {
-        _ret = 2;
-    }
+    const char *_retstr = server.arg(0).c_str();
+    byte _ret = _retstr[0] - '0';
     saveModoOperacao(_ret);
     handleModoOperacaoState();
 }
