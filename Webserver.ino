@@ -173,20 +173,10 @@ void handleDomainState()
 
 void handleModoOperacao()
 {
-    const char *_retstr = server.arg(0).c_str();
-
     if (DEBUG) Serial.print("Handle Modo: ");
     if (DEBUG) Serial.println(server.arg(0).c_str());
-    
-    byte _ret;
-    if (_retstr[0] == '1')
-    {
-        _ret = 1;
-    }
-    else
-    {
-        _ret = 2;
-    }
+    const char *_retstr = server.arg(0).c_str();
+    byte _ret = _retstr[0] - '0';
     saveModoOperacao(_ret);
     handleModoOperacaoState();
 }
