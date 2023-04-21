@@ -26,6 +26,23 @@ void mqttInit(std::function<void(char*, uint8_t*, unsigned int)> callback) {
   mqtt.setCallback(callback);
 }
 
+void mqttPublishRetainedMessage(const char *topic, String message, unsigned long bufferSize) {
+  mqtt.setBufferSize(bufferSize);
+  mqtt.publish(topic, message.c_str(), true);
+}
+
+void mqttPublishMessage(const char *topic, String message) {
+  mqtt.setBufferSize(256);
+  mqtt.publish(topic, message.c_str());
+}
+
+void mqttSubscribeTopic(const char *topic) {
+  mqtt.subscribe(topic);
+}
+
 void mqttLoop() {
+  if (!mqtt.connected()) {
+    mqttReconnect();
+  }
   mqtt.loop();
 }

@@ -22,6 +22,7 @@
 #define DEBUG_REMOTO 0
 #define EEPROM_SIZE 512
 #define WIFI_STA_TIMEOUT 10000
+#define UID_LEN 32
 
 const byte DNS_PORT = 53;
 const char *ssid = APSSID;

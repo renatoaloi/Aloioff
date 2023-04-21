@@ -269,7 +269,7 @@ void saveModoOperacao(byte _modo)
     );
 }
 
-void saveMQTTCmd(char *_mqttCmd)
+void saveMQTTCmd(const char *_mqttCmd)
 {
     saveUserConfig(
         userConfig.ssid,
@@ -291,7 +291,7 @@ void saveMQTTCmd(char *_mqttCmd)
     );
 }
 
-void saveMQTTStatus(char *_mqttStatus)
+void saveMQTTStatus(const char *_mqttStatus)
 {
     saveUserConfig(
         userConfig.ssid,
@@ -313,7 +313,7 @@ void saveMQTTStatus(char *_mqttStatus)
     );
 }
 
-void saveMQTTDeviceClass(char *_mqttDeviceClass)
+void saveMQTTDeviceClass(const char *_mqttDeviceClass)
 {
     saveUserConfig(
         userConfig.ssid,
@@ -335,7 +335,7 @@ void saveMQTTDeviceClass(char *_mqttDeviceClass)
     );
 }
 
-void saveMQTTPayloadOn(char *_mqttPayloadOn)
+void saveMQTTPayloadOn(const char *_mqttPayloadOn)
 {
     saveUserConfig(
         userConfig.ssid,
@@ -357,7 +357,7 @@ void saveMQTTPayloadOn(char *_mqttPayloadOn)
     );
 }
 
-void saveMQTTPayloadOff(char *_mqttPayloadOff)
+void saveMQTTPayloadOff(const char *_mqttPayloadOff)
 {
     saveUserConfig(
         userConfig.ssid,

@@ -6,33 +6,30 @@ function getField(fieldName, buttonName) {
     xhttp.onreadystatechange = function () {
       console.log(this.responseText);
       if (this.readyState == 4 && this.status == 200) {
-        if (fieldName === "feedName") {
+        if (fieldName === "configTopic") {
           document.getElementById(fieldName).value =
             this.responseText.split("|")[0];
-        } else if (fieldName === "mqttServer") {
+        } else if (fieldName === "commandTopic") {
           document.getElementById(fieldName).value =
             this.responseText.split("|")[1];
-        } else if (fieldName === "mqttServerPort") {
+        } else if (fieldName === "statusTopic") {
           document.getElementById(fieldName).value =
             this.responseText.split("|")[2];
-        } else if (fieldName === "mqttUsername") {
+        } else if (fieldName === "deviceClass") {
           document.getElementById(fieldName).value =
             this.responseText.split("|")[3];
-        } else if (fieldName === "mqttPassword") {
+        } else if (fieldName === "payloadOn") {
           document.getElementById(fieldName).value =
             this.responseText.split("|")[4];
+        } else if (fieldName === "payloadOff") {
+          document.getElementById(fieldName).value =
+            this.responseText.split("|")[5];
         }
         document.getElementById(fieldName).disabled = false;
         document.getElementById(buttonName).disabled = false;
       }
     };
-    var url = "";
-    if (fieldName === "deviceName") {
-      url = "/dispositivo/state";
-    } else {
-      url = "/mqtt/state";
-    }
-    xhttp.open("GET", url, true);
+    xhttp.open("GET", "/homeassistant/state", true);
     xhttp.send();
   }, 1000);
 }
@@ -49,27 +46,24 @@ function saveField(
   document.getElementById(buttonName).disabled = true;
   setTimeout(() => {
     var xhttp = new XMLHttpRequest();
-    var fieldValue1 = document.getElementById(fieldName1).value;
-    var urlParams1 = "/dispositivo?" + fieldName1 + "=" + fieldValue1;
-    xhttp.open("GET", urlParams1, true);
-    xhttp.send();
-
-    xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       console.log(this.responseText);
       if (this.readyState == 4 && this.status == 200) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const env = urlParams.get("env");
-        location.href = env + ".html";
+        location.href = "wifi.html";
       }
     };
-    var fieldValue2 = document.getElementById(fieldName2).value; // feed
-    var fieldValue3 = document.getElementById(fieldName3).value; // server
-    var fieldValue4 = document.getElementById(fieldName4).value; // port
-    var fieldValue5 = document.getElementById(fieldName5).value; // username
-    var fieldValue6 = document.getElementById(fieldName6).value; // password
+    var fieldValue1 = document.getElementById(fieldName1).value; // configTopic
+    var fieldValue2 = document.getElementById(fieldName2).value; // commandTopic
+    var fieldValue3 = document.getElementById(fieldName3).value; // statusTopic
+    var fieldValue4 = document.getElementById(fieldName4).value; // deviceClass
+    var fieldValue5 = document.getElementById(fieldName5).value; // payloadOn
+    var fieldValue6 = document.getElementById(fieldName6).value; // payloadOff
     var urlParams2 =
-      "/mqtt/config?" +
+      "/homeassistant/config?" +
+      fieldName1 +
+      "=" +
+      fieldValue1 +
+      "&" +
       fieldName2 +
       "=" +
       fieldValue2 +
