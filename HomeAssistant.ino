@@ -28,7 +28,6 @@ void initHomeAssistant() {
   mqttConnect();
   createDeviceConfigTopic();
   subscribeSwitchTopic(getMQTTCmd());
-  publishInitialStateTopic(getMQTTStatus(), getMQTTPayloadOff());
 }
 
 void handleHomeAssistant() {
@@ -43,21 +42,16 @@ void publishConfigTopic(const char *topicConfig, String topicConfigJson) {
   mqttPublishRetainedMessage(topicConfig, topicConfigJson, 2000);
 }
 
-String createUniqueIdByMillis() {
-  unsigned long currentMillis = millis();
-  char text[UID_LEN + 1];
-  for (int i = 0; i < UID_LEN; i++) {
-    text[i] = 'A' + (currentMillis + i) % 26;
-  }
-  text[UID_LEN] = '\0';
-  return String(text);
+String createUniqueId() {
+  String clientId = "Aloioff-" + String(getUserConfigId());
+  return clientId;
 }
 
 void createDeviceConfigTopic() {
   String topicConfigJson;
   topicConfigJson.reserve(2000);
   topicConfigJson = generateConfigJson(
-    createUniqueIdByMillis().c_str(), 
+    createUniqueId().c_str(), 
     getMQTTDeviceClass(), 
     getDispositivo(), 
     getMQTTStatus(), 
