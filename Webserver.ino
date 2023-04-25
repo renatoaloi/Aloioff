@@ -60,6 +60,8 @@ void initWebServerModoConfig()
     server.on("/mqtt/state", handleMQTTState);
     server.on("/homeassistant/config", handleHomeAssistantConfig);
     server.on("/homeassistant/state", handleHomeAssistantState);
+    server.on("/nodered/config", handleNodeRedConfig);
+    server.on("/nodered/state", handleNodeRedState);
     server.on("/relay", handleRelay);
     server.on("/reset", handleReset);
     server.onNotFound(handleFileSystem);
@@ -135,6 +137,31 @@ void handleHomeAssistantState () {
   mqttData.concat("|");
   mqttData.concat(getMQTTPayloadOff());
   if (DEBUG) Serial.print("Handle HomeAssistant State: ");
+  if (DEBUG) Serial.println(mqttData);
+  server.send(200, "text/plain", mqttData.c_str());  
+}
+
+void handleNodeRedConfig () {
+  const char *_feed = server.arg(0).c_str();
+  const char *_payloadOn = server.arg(1).c_str();
+  const char *_payloadOff = server.arg(2).c_str();
+
+  saveMQTTFeed(_feed);
+  saveMQTTPayloadOn(_payloadOn);
+  saveMQTTPayloadOff(_payloadOff);
+  
+  handleNodeRedState();
+}
+
+
+void handleNodeRedState () {
+  String mqttData = "";
+  mqttData.concat(getMQTTFeed());
+  mqttData.concat("|");
+  mqttData.concat(getMQTTPayloadOn());
+  mqttData.concat("|");
+  mqttData.concat(getMQTTPayloadOff());
+  if (DEBUG) Serial.print("Handle NodeRed State: ");
   if (DEBUG) Serial.println(mqttData);
   server.send(200, "text/plain", mqttData.c_str());  
 }
