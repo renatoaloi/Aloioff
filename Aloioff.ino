@@ -38,6 +38,11 @@ void setup()
         if (DEBUG) Serial.println("Iniciando modo #3");
         initHomeAssistant();
       }
+      else if (getModoOperacao() == 4)
+      {
+        if (DEBUG) Serial.println("Iniciando modo #4");
+        initNodeRed();
+      }
 
       // Starting discovery UDP service
       beginUDP();
@@ -67,6 +72,8 @@ void loop()
       handleOkGoogle();
     else if (getModoOperacao() == 3)
       handleHomeAssistant();
+    else if (getModoOperacao() == 4)
+      handleNodeRed();
     handleUDP();
   }
 }
