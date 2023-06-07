@@ -43,6 +43,7 @@ String responseHTML = ""
 
 void initWebServerModoConfig()
 {
+    httpUpdater.setup(&server);
     server.begin();
     if (DEBUG)
         Serial.println("Servidor Web no modo AP iniciado!");
@@ -65,11 +66,7 @@ void initWebServerModoConfig()
     server.on("/relay", handleRelay);
     server.on("/reset", handleReset);
     server.onNotFound(handleFileSystem);
-    //server.onNotFound([]() {
-    //  server.send(200, "text/html", responseHTML);
-    //});
 }
-
 
 void handleMQTTConfig () {
   const char *_feed = server.arg(0).c_str();

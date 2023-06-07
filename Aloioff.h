@@ -8,6 +8,7 @@
 #include <DNSServer.h>
 #include <WiFiUdp.h>
 #include <PubSubClient.h>
+#include <ESP8266HTTPUpdateServer.h>
 
 #define UDP_PORT 12345
 
@@ -16,7 +17,7 @@
 #define APPSK ""
 #endif
 
-#define RELE 0
+#define RELE LED_BUILTIN
 #define BUTTON 3
 #define DEBUG 1
 #define DEBUG_REMOTO 0
@@ -33,6 +34,7 @@ IPAddress gateway(10, 0, 0, 1);
 IPAddress subnet(255, 255, 255, 0);
 
 ESP8266WebServer server(80);
+ESP8266HTTPUpdateServer httpUpdater;
 DNSServer dnsServer;
 fauxmoESP fauxmo;
 WiFiUDP UDP;
@@ -66,7 +68,7 @@ struct UserConfig
 
 unsigned long tempoOpenedFile = 0L;
 static bool openedFile = false;
-int UserId = 91309;
+int UserId = 91311;
 int eeAddress = 0;
 static struct UserConfig userConfig;
 
