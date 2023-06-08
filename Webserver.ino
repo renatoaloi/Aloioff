@@ -34,13 +34,6 @@ void handleRelay()
     server.send(200, "text/plain", "");
 }
 
-String responseHTML = ""
-                      "<!DOCTYPE html><html lang='en'><head>"
-                      "<meta name='viewport' content='width=device-width'>"
-                      "<title>CaptivePortal</title></head><body>"
-                      "<h1>Hello World!</h1><p>This is a captive portal example."
-                      " All requests will be redirected here.</p></body></html>";
-
 void initWebServerModoConfig()
 {
     httpUpdater.setup(&server);
@@ -65,7 +58,19 @@ void initWebServerModoConfig()
     server.on("/nodered/state", handleNodeRedState);
     server.on("/relay", handleRelay);
     server.on("/reset", handleReset);
+    server.on("/update/firmware", handleFirmwareUpdate);
+    server.on("/update/filesystem", handleFilesystemUpdate);
     server.onNotFound(handleFileSystem);
+}
+
+void handleFirmwareUpdate() {
+  server.sendHeader("Location", String("/update/firmware.html"), true);
+  server.send(302, "text/plain", "");
+}
+
+void handleFilesystemUpdate() {
+  server.sendHeader("Location", String("/update/filesystem.html"), true);
+  server.send(302, "text/plain", "");
 }
 
 void handleMQTTConfig () {
