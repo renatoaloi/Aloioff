@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ALOIOFF - A Tomada Inteligente para todas dominar!</title>
+    <link rel="stylesheet" href="../css/aloistrap.min.css" />
+  </head>
+
+  <body class="text-bg-dark">
+    <form method="POST" action="/update" enctype="multipart/form-data">
+        <div class="container">
+        <div class="row m-4">
+            <div class="col-2">
+            <a href="#" class="btn btn-lg btn-secondary" onclick="history.back()">
+                &nbsp;&lt;&nbsp;
+            </a>
+            </div>
+            <div class="col-9 text-center text-success">
+            <h2>OTA Filesystem Updater</h2>
+            </div>
+            <div class="col-1"></div>
+        </div>
+        <div>
+            <div class="text-secondary">Filesystem Update:</div>
+            <div class="m-4">
+            <div class="mb-3">
+                <label for="filesystem" class="form-label form-control-lg">
+                Arquivo de Filesystem
+                </label>
+                <input
+                    type="file"
+                    accept=".bin,.bin.gz"
+                    class="form-control form-control-lg"
+                    id="filesystem"
+                    name="filesystem"
+                    aria-describedby="filesystemHelp"
+                />
+                <div id="filesystemHelp" class="form-text">
+                Pesquise pelo arquivo binário do filesystem para a atualização.
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="mt-4 mb-3">
+            <input
+            type="submit"
+            class="btn btn-success btn-lg"
+            value="A T U A L I Z A R !!"
+            style="width: 100%"
+            />
+        </div>
+        </div>
+    </form>
+  </body>
+</html>

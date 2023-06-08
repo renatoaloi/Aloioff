@@ -19,7 +19,7 @@
 
 #define RELE LED_BUILTIN
 #define BUTTON 3
-#define DEBUG 1
+#define DEBUG 0
 #define DEBUG_REMOTO 0
 #define EEPROM_SIZE 512
 #define WIFI_STA_TIMEOUT 10000
