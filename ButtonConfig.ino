@@ -36,11 +36,13 @@ bool checkButton()
     buttonPressed = false;
     contaVezes = 0;
     contaTempo = millis();
-    if (relayStatus) {
-      turnOffRelay();
-    } 
-    else {
-      turnOnRelay();
+    if (!getModoAP()) {
+      if (relayStatus) {
+        turnOffRelay();
+      } 
+      else {
+        turnOnRelay();
+      }
     }
   }
    

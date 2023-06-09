@@ -8,9 +8,7 @@ void setup()
     delay(500);
   }
 
-  pinMode(LED2, OUTPUT);
-  digitalWrite(LED2, HIGH);
-  analogWrite(LED1, 0);
+  setupLeds();
 
   initUserConfig();
   configButton();
@@ -68,6 +66,8 @@ void loop()
   if (getModoAP()) {
     dnsServer.processNextRequest();
     handleWebServer();
+    blinkLed2Fast();
+    //blinkLed1Slow();
   }
   if (!getModoAP()) {
     if (getModoOperacao() == 1)

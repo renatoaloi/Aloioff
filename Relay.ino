@@ -8,7 +8,7 @@ void turnOffRelay()
 {
   relayStatus = false;
   if (DEBUG) Serial.println("turned Off Relay");
-  digitalWrite(LED2, HIGH);
+  turnOffLed(LED2);
   digitalWrite(RELE, LOW);
 }
 
@@ -16,6 +16,6 @@ void turnOnRelay()
 {
   relayStatus = true;
   if (DEBUG) Serial.println("turned On Relay");
-  digitalWrite(LED2, LOW);
+  turnOnLed(LED2);
   digitalWrite(RELE, HIGH);
 }

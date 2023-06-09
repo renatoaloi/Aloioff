@@ -75,4 +75,7 @@ int UserId = 91311;
 int eeAddress = 0;
 static struct UserConfig userConfig;
 
+volatile unsigned long blinkRate;
+volatile bool blinkStatus;
+
 static const char TEXT_PLAIN[] PROGMEM = "text/plain";
