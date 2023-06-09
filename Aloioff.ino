@@ -8,6 +8,10 @@ void setup()
     delay(500);
   }
 
+  pinMode(LED2, OUTPUT);
+  digitalWrite(LED2, HIGH);
+  analogWrite(LED1, 0);
+
   initUserConfig();
   configButton();
 
