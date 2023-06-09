@@ -17,13 +17,15 @@
 #define APPSK ""
 #endif
 
-#define RELE LED_BUILTIN
-#define BUTTON 3
-#define DEBUG 0
-#define DEBUG_REMOTO 0
-#define EEPROM_SIZE 512
-#define WIFI_STA_TIMEOUT 10000
-#define UID_LEN 32
+#define RELE              LED_BUILTIN
+#define BUTTON            3
+#define LED1              A0
+#define LED2              13
+#define DEBUG             0
+#define DEBUG_REMOTO      0
+#define EEPROM_SIZE       512
+#define WIFI_STA_TIMEOUT  10000
+#define UID_LEN           32
 
 const byte DNS_PORT = 53;
 const char *ssid = APSSID;
@@ -44,6 +46,7 @@ PubSubClient mqtt(espClient);
 
 char packet[255];
 char reply[] = "Packet received!";
+static bool relayStatus = false;
 
 struct UserConfig
 {
