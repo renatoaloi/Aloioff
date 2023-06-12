@@ -67,7 +67,7 @@ void loop()
     dnsServer.processNextRequest();
     handleWebServer();
     blinkLed2Fast();
-    //blinkLed1Slow();
+    blinkLed1Slow();
   }
   if (!getModoAP()) {
     if (getModoOperacao() == 1)
