@@ -67,9 +67,12 @@ void loop()
     dnsServer.processNextRequest();
     handleWebServer();
     blinkLed2Fast();
-    blinkLed1Slow();
+    blinkLed1Fast();
   }
   if (!getModoAP()) {
+    if (IsWiFiNotConnected()) {
+        blinkLed2Slow();
+    }
     if (getModoOperacao() == 1)
       alexaHandle();
     else if (getModoOperacao() == 2)

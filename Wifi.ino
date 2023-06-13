@@ -24,9 +24,6 @@ void WaitForConnection()
     {
         delay(100);
     }
-    if (IsWiFiNotConnected()) {
-        blinkLed2Slow();
-    }
     if (DEBUG) {
         if (IsWiFiNotConnected()) {
             Serial.println("Erro ao conectar no WiFi!");

@@ -34,8 +34,8 @@ void blinkLed2Slow() {
   blinkLeds(LED2, 1000);
 }
 
-void blinkLed1Slow() {
-  blinkLeds(LED1, 2000);
+void blinkLed1Fast() {
+  blinkLeds(LED1, 200);
 }
 
 void blinkLeds(int led, int rate) {
